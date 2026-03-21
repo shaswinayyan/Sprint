@@ -215,13 +215,10 @@ CREATE OR REPLACE PACKAGE BODY HMS_PKG_SH AS
             SELECT  p.PATIENT_ID,
                     p.PATIENT_FIRST_NAME,
                     p.PATIENT_LAST_NAME,
-                    pp.PHONE_NUMBER,
+                    p.PATIENT_PHONE_NUMBER AS PHONE_NUMBER,
                     p.EMAIL_ID,
                     p.ADDRESS_CITY
               FROM  HMS_PATIENT_SH p
-              LEFT JOIN HMS_PATIENT_PHONE_MST_SH pp
-                     ON p.PATIENT_ID  = pp.PATIENT_ID
-                    AND pp.PHONE_TYPE = 'PRIMARY'
              WHERE  p.HOSPITAL_ID   = p_hospital_id
                AND  p.DEPARTMENT_ID = p_department_id
              ORDER BY p.PATIENT_ID;

@@ -25,10 +25,7 @@
 -- ===========================================================
 -- STEP 0: Drop existing tables if re-running (safe cleanup)
 -- ===========================================================
-BEGIN
-    EXECUTE IMMEDIATE 'DROP TABLE HMS_PATIENT_PHONE_MST_NM    CASCADE CONSTRAINTS';
-EXCEPTION WHEN OTHERS THEN NULL; END;
-/
+
 BEGIN
     EXECUTE IMMEDIATE 'DROP TABLE HMS_PATIENT_NM              CASCADE CONSTRAINTS';
 EXCEPTION WHEN OTHERS THEN NULL; END;
@@ -232,6 +229,7 @@ CREATE TABLE HMS_PATIENT_NM (
     DEPARTMENT_ID       NUMBER(10),                -- FK -> HMS_DEPARTMENT_NM (admitted dept)
     PATIENT_FIRST_NAME  VARCHAR2(50)    NOT NULL,  -- Patient first name
     PATIENT_LAST_NAME   VARCHAR2(50)    NOT NULL,  -- Patient last name
+    PATIENT_PHONE_NUMBER VARCHAR2(15)    NOT NULL,  -- Patient's contact number
     EMAIL_ID            VARCHAR2(100),             -- Patient's email address
     ADDRESS_STREET      VARCHAR2(100),             -- Street address
     ADDRESS_CITY        VARCHAR2(50),              -- City of residence
@@ -255,28 +253,6 @@ COMMENT ON COLUMN HMS_PATIENT_NM.ADDRESS_STREET         IS 'Street portion of pa
 COMMENT ON COLUMN HMS_PATIENT_NM.ADDRESS_CITY           IS 'City portion of patient mailing address';
 COMMENT ON COLUMN HMS_PATIENT_NM.ADDRESS_STATE          IS 'State or province of patient mailing address';
 COMMENT ON COLUMN HMS_PATIENT_NM.ADDRESS_POSTAL_CODE    IS 'Postal or ZIP code of patient mailing address';
-
-
--- ===========================================================
--- TABLE 8: HMS_PATIENT_PHONE_MST_NM
--- Purpose : Stores one or more phone numbers per patient.
--- ===========================================================
-CREATE TABLE HMS_PATIENT_PHONE_MST_NM (
-    PHONE_RECORD_ID     NUMBER(10)      NOT NULL,  -- Surrogate PK
-    PATIENT_ID          NUMBER(10)      NOT NULL,  -- FK -> HMS_PATIENT_NM
-    PHONE_NUMBER        VARCHAR2(15)    NOT NULL,  -- Contact phone number
-    PHONE_TYPE          VARCHAR2(10)    DEFAULT 'PRIMARY', -- Type: PRIMARY / SECONDARY
-    CONSTRAINT PK_PAT_PHONE    PRIMARY KEY (PHONE_RECORD_ID),
-    CONSTRAINT FK_PHONE_PAT    FOREIGN KEY (PATIENT_ID)
-                               REFERENCES HMS_PATIENT_NM (PATIENT_ID),
-    CONSTRAINT CHK_PHONE_TYPE_NM  CHECK (PHONE_TYPE IN ('PRIMARY', 'SECONDARY'))
-);
-
-COMMENT ON TABLE  HMS_PATIENT_PHONE_MST_NM              IS 'Multiple contact phone numbers for a single patient';
-COMMENT ON COLUMN HMS_PATIENT_PHONE_MST_NM.PHONE_RECORD_ID IS 'Surrogate PK for each phone record';
-COMMENT ON COLUMN HMS_PATIENT_PHONE_MST_NM.PATIENT_ID      IS 'FK to HMS_PATIENT_NM';
-COMMENT ON COLUMN HMS_PATIENT_PHONE_MST_NM.PHONE_NUMBER    IS 'Actual phone number string';
-COMMENT ON COLUMN HMS_PATIENT_PHONE_MST_NM.PHONE_TYPE      IS 'Classifies as PRIMARY or SECONDARY contact number';
 
 
 -- ===========================================================

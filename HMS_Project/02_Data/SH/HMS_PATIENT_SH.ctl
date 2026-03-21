@@ -23,7 +23,8 @@ TRAILING NULLCOLS
     HOSPITAL_ID,           -- Branch where patient is registered
     DEPARTMENT_ID,         -- Admitted department (NULL = outpatient)
     PATIENT_FIRST_NAME,    -- Patient first name
-    PATIENT_LAST_NAME,     -- Patient last name
+    PATIENT_LAST_NAME,
+    PATIENT_PHONE_NUMBER,     -- Patient last name
     EMAIL_ID,              -- Patient email
     ADDRESS_STREET,        -- Street address
     ADDRESS_CITY,          -- City of residence

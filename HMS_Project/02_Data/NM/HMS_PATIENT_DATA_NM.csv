@@ -1,6 +1,6 @@
-PATIENT_ID,HOSPITAL_ID,DEPARTMENT_ID,PATIENT_FIRST_NAME,PATIENT_LAST_NAME,EMAIL_ID,ADDRESS_STREET,ADDRESS_CITY,ADDRESS_STATE,ADDRESS_POSTAL_CODE
-1001,1,1,Ramya,Subramanian,ramya.sub@gmail.com,12 MG Road,Mumbai,Maharashtra,400001
-1002,1,2,Arvind,Kapoor,arvind.k@yahoo.com,45 Park Street,Mumbai,Maharashtra,400002
-1003,2,4,Geeta,Bose,geeta.b@gmail.com,7 Civil Lines,Delhi,Delhi,110001
-1004,2,5,Mohan,Tripathi,mohan.t@gmail.com,19 Karol Bagh,Delhi,Delhi,110005
-1005,3,6,Smitha,Nambiar,smitha.n@gmail.com,88 MG Road,Bangalore,Karnataka,560001
+PATIENT_ID,HOSPITAL_ID,DEPARTMENT_ID,PATIENT_FIRST_NAME,PATIENT_LAST_NAME,PATIENT_PHONE_NUMBER,EMAIL_ID,ADDRESS_STREET,ADDRESS_CITY,ADDRESS_STATE,ADDRESS_POSTAL_CODE
+1001,1,1,Ramya,Subramanian,9876543210,ramya.sub@gmail.com,12 MG Road,Mumbai,Maharashtra,400001
+1002,1,2,Arvind,Kapoor,9876543210,arvind.k@yahoo.com,45 Park Street,Mumbai,Maharashtra,400002
+1003,2,4,Geeta,Bose,9876543210,geeta.b@gmail.com,7 Civil Lines,Delhi,Delhi,110001
+1004,2,5,Mohan,Tripathi,9876543210,mohan.t@gmail.com,19 Karol Bagh,Delhi,Delhi,110005
+1005,3,6,Smitha,Nambiar,9876543210,smitha.n@gmail.com,88 MG Road,Bangalore,Karnataka,560001

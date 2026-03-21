@@ -38,7 +38,7 @@
    ```sql
    SELECT table_name FROM user_tables WHERE table_name LIKE 'HMS_%\_<YOUR_SUFFIX>' ESCAPE '\' ORDER BY 1;
    ```
-   You should see **13 tables** listed (8 base + 5 staging).
+   You should see **12 tables** listed (7 base + 5 staging).
 
 ---
 

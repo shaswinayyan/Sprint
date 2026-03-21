@@ -1,0 +1,8 @@
+DEPARTMENT_ID,HOSPITAL_ID,DEPARTMENT_NAME,DEPT_MANAGER,NUMBER_OF_BEDS
+1,1,Orthopedics,Dr. Srinivas Rao,30
+2,1,Cardiology,Dr. Meera Pillai,20
+3,1,Critical Care,Dr. Anand Verma,15
+4,2,Kidney Care,Dr. Naveen Gupta,25
+5,2,Orthopedics,Dr. Kavitha Reddy,22
+6,3,Knee Replacement,Dr. Ravi Shankar,18
+7,3,Critical Care,Dr. Deepa Menon,12

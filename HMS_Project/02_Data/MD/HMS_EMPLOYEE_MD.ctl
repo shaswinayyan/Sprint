@@ -1,0 +1,15 @@
+-- ============================================================
+-- File        : HMS_EMPLOYEE_MD.ctl  /  HMS_DEPT_MD.ctl
+--               HMS_PATIENT_MD.ctl
+-- Member      : MD - Manideep
+-- ============================================================
+
+-- [Save each block as its own .ctl file as shown below]
+
+-- *** HMS_EMPLOYEE_MD.ctl ***
+-- LOAD DATA
+-- INFILE 'HMS_EMPLOYEE_DATA_MD.csv'
+-- INTO TABLE HMS_EMPLOYEES APPEND
+-- FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' TRAILING NULLCOLS
+-- ( EMPLOYEE_ID, HOSPITAL_ID, DEPARTMENT_ID,
+--   EMPLOYEE_FIRST_NAME, EMPLOYEE_LAST_NAME, EMPLOYEE_TYPE, EMAIL_ID )

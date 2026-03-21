@@ -1,0 +1,6 @@
+1. Can't access the backend of the application such as $TOP hence the reports and forms should be presented in the frontend itself without any end to end system.
+2. The names of each entities should be meaningful and the codes should be properly documented, commented and should follow the coding standards.
+3. Even though there are a team of 4 people working on this project, we should should show the project on out individual system for that I need four different properly well documented names and detailed step by step procedure to work in the oracle EBS, SQL developer.
+4. The project will be done on the same oracle EBS system given to us through website based java exe runtime.
+5. There should be usage of bulk upload of data using the PL/SQL, CTL file and CSV file with data and all the codes should be well documented and all the files and names of the packages and codes should be in 4 different ways so that the files could be easily shared and the output could be easily obtained from the teammates.
+6. The oracle EBS version is 12.2.8 and we are all have access to everything except the ability to create a new application.

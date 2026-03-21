@@ -1,0 +1,13 @@
+DEPARTMENT_ID,HOSPITAL_ID,DEPARTMENT_NAME,DEPT_MANAGER,NUMBER_OF_BEDS
+1,1,Kidney,Dr. Aadhya Sharma,11
+2,1,Knee Replacements,Dr. Rohit Iyer,45
+3,1,Orthopedics,Dr. Aadhya Das,28
+4,1,Critical Care,Dr. Pooja Sharma,24
+5,2,Kidney,Dr. Ishaan Yadav,16
+6,2,Knee Replacements,Dr. Ayaan Gupta,34
+7,2,Orthopedics,Dr. Arjun Menon,38
+8,2,Critical Care,Dr. Aarav Yadav,46
+9,3,Kidney,Dr. Ayaan Nair,22
+10,3,Knee Replacements,Dr. Sai Pillai,19
+11,3,Orthopedics,Dr. Atharv Verma,37
+12,3,Critical Care,Dr. Pari Iyer,30

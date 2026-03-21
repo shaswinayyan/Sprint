@@ -116,7 +116,7 @@ COMMENT ON COLUMN HMS_HOSPITAL_BRANCH_NM.CUSTOMER_CARE_PHONE    IS 'Customer car
 CREATE TABLE HMS_DEPARTMENT_NM (
     DEPARTMENT_ID       NUMBER(10)      NOT NULL,  -- Unique ID for the department
     HOSPITAL_ID         NUMBER(10)      NOT NULL,  -- FK -> HMS_HOSPITAL_BRANCH_NM
-    DEPARTMENT_NAME     VARCHAR2(100)   NOT NULL,  -- Name of the department (e.g., Orthopedics)
+    DEPARTMENT_NAME     VARCHAR2(100)   NOT NULL,  -- Name of the department (e.g., Knee Replacements)
     DEPT_MANAGER        VARCHAR2(100),             -- Name of the department manager
     NUMBER_OF_BEDS      NUMBER(5)       DEFAULT 0, -- Total beds in this department
     CONSTRAINT PK_HMS_DEPARTMENT_NM    PRIMARY KEY (DEPARTMENT_ID),
@@ -128,7 +128,7 @@ CREATE TABLE HMS_DEPARTMENT_NM (
 COMMENT ON TABLE  HMS_DEPARTMENT_NM                     IS 'Departments within each hospital branch; tracks bed capacity and management';
 COMMENT ON COLUMN HMS_DEPARTMENT_NM.DEPARTMENT_ID       IS 'Unique identifier for the department (PK)';
 COMMENT ON COLUMN HMS_DEPARTMENT_NM.HOSPITAL_ID         IS 'FK to HMS_HOSPITAL_BRANCH_NM; identifies which branch this department belongs to';
-COMMENT ON COLUMN HMS_DEPARTMENT_NM.DEPARTMENT_NAME     IS 'Descriptive name of the department (e.g., Cardiology, ICU)';
+COMMENT ON COLUMN HMS_DEPARTMENT_NM.DEPARTMENT_NAME     IS 'Descriptive name of the department (e.g., Kidney, Critical Care)';
 COMMENT ON COLUMN HMS_DEPARTMENT_NM.DEPT_MANAGER        IS 'Full name of the person managing this department';
 COMMENT ON COLUMN HMS_DEPARTMENT_NM.NUMBER_OF_BEDS      IS 'Total number of beds available in this department';
 

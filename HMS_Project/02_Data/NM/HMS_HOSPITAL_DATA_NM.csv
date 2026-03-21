@@ -1,4 +1,4 @@
 HOSPITAL_CODE,CITY_NAME,HOSPITAL_NAME,HOSPITAL_BASIC_FEES
-H001,Mumbai,HMS Mumbai Central,500
-H002,Delhi,HMS Delhi North,450
-H003,Bangalore,HMS Bangalore East,480
+H001,Mumbai,HMS Mumbai,800
+H002,Delhi,HMS Delhi,600
+H003,Bangalore,HMS Bangalore,400

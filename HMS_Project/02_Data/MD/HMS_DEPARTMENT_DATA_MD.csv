@@ -1,0 +1,13 @@
+DEPARTMENT_ID,HOSPITAL_ID,DEPARTMENT_NAME,DEPT_MANAGER,NUMBER_OF_BEDS
+1,1,Kidney,Dr. Shaurya Singh,45
+2,1,Knee Replacements,Dr. Sai Rao,38
+3,1,Orthopedics,Dr. Aarav Pillai,11
+4,1,Critical Care,Dr. Vihaan Iyer,40
+5,2,Kidney,Dr. Jiya Chatterjee,42
+6,2,Knee Replacements,Dr. Vivaan Nair,40
+7,2,Orthopedics,Dr. Vivaan Desai,23
+8,2,Critical Care,Dr. Sai Singh,33
+9,3,Kidney,Dr. Rohit Kumar,35
+10,3,Knee Replacements,Dr. Rohit Patel,11
+11,3,Orthopedics,Dr. Shaurya Sharma,50
+12,3,Critical Care,Dr. Riya Joshi,15

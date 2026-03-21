@@ -1,0 +1,13 @@
+DEPARTMENT_ID,HOSPITAL_ID,DEPARTMENT_NAME,DEPT_MANAGER,NUMBER_OF_BEDS
+1,1,Kidney,Dr. Arjun Reddy,40
+2,1,Knee Replacements,Dr. Karan Kumar,23
+3,1,Orthopedics,Dr. Rahul Gupta,41
+4,1,Critical Care,Dr. Diya Verma,30
+5,2,Kidney,Dr. Shaurya Sharma,15
+6,2,Knee Replacements,Dr. Arjun Gupta,46
+7,2,Orthopedics,Dr. Aadhya Reddy,34
+8,2,Critical Care,Dr. Aadhya Desai,40
+9,3,Kidney,Dr. Rahul Verma,31
+10,3,Knee Replacements,Dr. Shruti Reddy,13
+11,3,Orthopedics,Dr. Neha Pillai,42
+12,3,Critical Care,Dr. Aditya Menon,10

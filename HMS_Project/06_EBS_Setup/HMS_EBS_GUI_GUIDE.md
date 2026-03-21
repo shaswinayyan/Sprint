@@ -47,7 +47,7 @@
 * **Format Type:** `Char` / **Maximum Size:** `100`
 * **Validation Type:** `Table`
 * Click **Edit Information**:
-  * **Table Name:** `HMS_HOSPITAL_BRANCH_<SUFFIX>`
+  * **Table Name:** `HMS_HOSP_BRANCH_V_<SUFFIX>` *(Use this View to bypass EBS LOV restrictions)*
   * **Value Column:** `BRANCH_NAME` (Size: 100)
   * **ID Column:** `HOSPITAL_ID` (Size: 10)
 * -> **Save**
@@ -58,7 +58,7 @@
 * **List Type:** `List of Values` / **Format Type:** `Char` (Size 100)
 * **Validation Type:** `Table`
 * Click **Edit Information**:
-  * **Table Name:** `HMS_DEPARTMENT_<SUFFIX>`
+  * **Table Name:** `HMS_DEPARTMENT_V_<SUFFIX>` *(Use this View to bypass EBS LOV restrictions)*
   * **Value Column:** `DEPARTMENT_NAME` (Size: 100)
   * **ID Column:** `DEPARTMENT_ID` (Size: 10)
 * -> **Save**

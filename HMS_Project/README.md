@@ -9,9 +9,9 @@ Welcome to the HMS Project! This README provides a comprehensive overview of how
 ## 👥 Team Constraints & Setup
 This project is built for a team of 4 members. Every member must set up their own independent system within the same Oracle EBS environment without causing conflicts. 
 - **Shaswin (SH)** - User ID: `1021027`
-- **Chandana (CH)** - User ID: *(Update in PL/SQL package)*
-- **Manideep (MD)** - User ID: *(Update in PL/SQL package)*
-- **Namitha (NM)** - User ID: *(Update in PL/SQL package)*
+- **Chandana (CH)** - User ID: `1021034`
+- **Manideep (MD)** - User ID: `1021035`
+- **Namitha (NM)** - User ID: `1021052`
 
 We avoid creating new Oracle applications and rely strictly on Oracle EBS frontend forms, alongside SQL Developer for backend data setup.
 

@@ -266,5 +266,18 @@ CREATE SEQUENCE HMS_PATIENT_SEQ_NM          START WITH 1 INCREMENT BY 1 NOCACHE;
 CREATE SEQUENCE HMS_PAT_PHONE_SEQ_NM        START WITH 1 INCREMENT BY 1 NOCACHE;
 
 -- ============================================================
+
+-- ===========================================================
+-- VIEWS FOR ORACLE EBS VALUE SETS (LOVs)
+-- Purpose: Unregistered custom tables sometimes do not appear
+-- in the Application Developer Value Set LOV. Creating a view
+-- guarantees visibility across the EBS GUI layer.
+-- ===========================================================
+CREATE OR REPLACE VIEW HMS_HOSP_BRANCH_V_NM AS 
+SELECT HOSPITAL_ID, BRANCH_NAME FROM HMS_HOSPITAL_BRANCH_NM;
+
+CREATE OR REPLACE VIEW HMS_DEPARTMENT_V_NM AS 
+SELECT DEPARTMENT_ID, DEPARTMENT_NAME FROM HMS_DEPARTMENT_NM;
+
 -- END OF FILE: HMS_CREATE_TABLES_NM.sql
 -- ============================================================

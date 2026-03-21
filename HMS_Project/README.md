@@ -24,8 +24,8 @@ The project is executed in a sequential pipeline. Follow the steps below **in or
 ### Step 1: DDL — Create the Database Objects
 *Located in:* `01_DDL/`
 1. Open SQL Developer and connect to the `APPS` schema.
-2. Run `HMS_CREATE_TABLES.sql` to create the 8 base tables and their sequences.
-3. Run `HMS_CREATE_STAGING_TABLES.sql` to create the 5 staging tables used for bulk data loading. These tables include Oracle EBS standard **WHO Audit Columns** (`CREATED_BY`, `LAST_UPDATED_BY`, etc.).
+2. Run `01_DDL/<SUFFIX>/HMS_CREATE_TABLES_<SUFFIX>.sql` to create your 8 isolated base tables.
+3. Run `01_DDL/<SUFFIX>/HMS_CREATE_STAGING_TABLES_<SUFFIX>.sql` to create your 5 isolated staging tables. These include Oracle EBS standard **WHO Audit Columns** (`CREATED_BY`, `LAST_UPDATED_BY`, etc.).
 
 ### Step 2: Data Loading — Bulk Upload via SQL*Loader
 *Located in:* `02_Data/`

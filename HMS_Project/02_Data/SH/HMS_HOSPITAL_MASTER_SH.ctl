@@ -4,7 +4,7 @@
 -- Member      : SH - Shaswin
 -- Description : SQL*Loader control file for bulk loading
 --               hospital master records from CSV into the
---               HMS_HOSPITAL_MASTER table under APPS schema.
+--               HMS_HOSPITAL_MASTER_SH table under APPS schema.
 -- Usage       : sqlldr userid=APPS/<password>@<SID>
 --                      control=HMS_HOSPITAL_MASTER_SH.ctl
 --                      log=HMS_HOSPITAL_MASTER_SH.log
@@ -18,7 +18,7 @@ INFILE 'HMS_HOSPITAL_DATA_SH.csv'
 
 -- Append adds rows without truncating existing data
 -- Use TRUNCATE instead if you want to clear table first
-INTO TABLE HMS_HOSPITAL_MASTER
+INTO TABLE HMS_HOSPITAL_MASTER_STG_SH
 APPEND
 
 -- Fields are comma-separated; strings optionally quoted

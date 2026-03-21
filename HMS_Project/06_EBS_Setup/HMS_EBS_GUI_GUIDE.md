@@ -28,16 +28,17 @@
 
 ---
 
-### Step 1.2 — Run DDL (Create Tables)
+### Step 1.2 — Run DDL (Create Tables & Staging)
 
-1. Go to **File → Open** → select `01_DDL\HMS_CREATE_TABLES.sql`
+1. Go to **File → Open** → select `01_DDL\<YOUR_SUFFIX>\HMS_CREATE_TABLES_<YOUR_SUFFIX>.sql`
 2. Press **F5** (Run Script) — runs the entire file
-3. Verify in the Script Output panel: no errors shown
-4. To confirm tables exist, run:
+3. Next, open `01_DDL\<YOUR_SUFFIX>\HMS_CREATE_STAGING_TABLES_<YOUR_SUFFIX>.sql` and run it too.
+4. Verify in the Script Output panel: no errors shown
+5. To confirm your tables exist, run:
    ```sql
-   SELECT table_name FROM user_tables WHERE table_name LIKE 'HMS_%' ORDER BY 1;
+   SELECT table_name FROM user_tables WHERE table_name LIKE 'HMS_%\_<YOUR_SUFFIX>' ESCAPE '\' ORDER BY 1;
    ```
-   You should see **8 tables** listed.
+   You should see **13 tables** listed (8 base + 5 staging).
 
 ---
 
@@ -327,15 +328,15 @@ After completing all steps above, verify as follows:
 
 ### SQL Developer Verification
 ```sql
--- 1. Confirm all 8 tables exist
-SELECT table_name FROM user_tables WHERE table_name LIKE 'HMS_%' ORDER BY 1;
+-- 1. Confirm all 13 tables exist for your suffix
+SELECT table_name FROM user_tables WHERE table_name LIKE 'HMS_%\_<YOUR_SUFFIX>' ESCAPE '\' ORDER BY 1;
 
--- 2. Confirm row counts match CSV data
-SELECT 'HOSPITAL_MASTER' tbl, COUNT(*) FROM HMS_HOSPITAL_MASTER UNION ALL
-SELECT 'HOSPITAL_BRANCH',      COUNT(*) FROM HMS_HOSPITAL_BRANCH UNION ALL
-SELECT 'DEPARTMENT',           COUNT(*) FROM HMS_DEPARTMENT       UNION ALL
-SELECT 'EMPLOYEES',            COUNT(*) FROM HMS_EMPLOYEES        UNION ALL
-SELECT 'PATIENT',              COUNT(*) FROM HMS_PATIENT;
+-- 2. Confirm row counts match CSV data (replace <SUFFIX> with your suffix)
+SELECT 'HOSPITAL_MASTER' tbl, COUNT(*) FROM HMS_HOSPITAL_MASTER_<SUFFIX> UNION ALL
+SELECT 'HOSPITAL_BRANCH',      COUNT(*) FROM HMS_HOSPITAL_BRANCH_<SUFFIX> UNION ALL
+SELECT 'DEPARTMENT',           COUNT(*) FROM HMS_DEPARTMENT_<SUFFIX>       UNION ALL
+SELECT 'EMPLOYEES',            COUNT(*) FROM HMS_EMPLOYEES_<SUFFIX>        UNION ALL
+SELECT 'PATIENT',              COUNT(*) FROM HMS_PATIENT_<SUFFIX>;
 
 -- 3. Confirm packages are valid
 SELECT object_name, status FROM user_objects

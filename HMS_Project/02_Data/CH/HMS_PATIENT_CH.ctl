@@ -4,7 +4,7 @@
 -- ============================================================
 LOAD DATA
 INFILE 'HMS_PATIENT_DATA_CH.csv'
-INTO TABLE HMS_PATIENT
+INTO TABLE HMS_PATIENT_STG_CH
 APPEND
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'

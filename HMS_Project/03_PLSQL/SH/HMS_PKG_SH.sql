@@ -116,12 +116,12 @@ CREATE OR REPLACE PACKAGE BODY HMS_PKG_SH AS
         v_dept_count      NUMBER := 0;
         v_doctor_count    NUMBER := 0;
         v_employee_count  NUMBER := 0;
-        v_branch_name     HMS_HOSPITAL_BRANCH.BRANCH_NAME%TYPE;
+        v_branch_name     HMS_HOSPITAL_BRANCH_SH.BRANCH_NAME%TYPE;
     BEGIN
         -- Fetch branch name; abort gracefully if not found
         BEGIN
             SELECT BRANCH_NAME INTO v_branch_name
-              FROM HMS_HOSPITAL_BRANCH
+              FROM HMS_HOSPITAL_BRANCH_SH
              WHERE HOSPITAL_ID = p_hospital_id;
         EXCEPTION
             WHEN NO_DATA_FOUND THEN
@@ -129,10 +129,10 @@ CREATE OR REPLACE PACKAGE BODY HMS_PKG_SH AS
                 RETURN;
         END;
 
-        SELECT COUNT(*) INTO v_patient_count  FROM HMS_PATIENT    WHERE HOSPITAL_ID = p_hospital_id;
-        SELECT COUNT(*) INTO v_dept_count     FROM HMS_DEPARTMENT WHERE HOSPITAL_ID = p_hospital_id;
-        SELECT COUNT(*) INTO v_doctor_count   FROM HMS_EMPLOYEES  WHERE HOSPITAL_ID = p_hospital_id AND EMPLOYEE_TYPE = 'DOCTOR';
-        SELECT COUNT(*) INTO v_employee_count FROM HMS_EMPLOYEES  WHERE HOSPITAL_ID = p_hospital_id;
+        SELECT COUNT(*) INTO v_patient_count  FROM HMS_PATIENT_SH    WHERE HOSPITAL_ID = p_hospital_id;
+        SELECT COUNT(*) INTO v_dept_count     FROM HMS_DEPARTMENT_SH WHERE HOSPITAL_ID = p_hospital_id;
+        SELECT COUNT(*) INTO v_doctor_count   FROM HMS_EMPLOYEES_SH  WHERE HOSPITAL_ID = p_hospital_id AND EMPLOYEE_TYPE = 'DOCTOR';
+        SELECT COUNT(*) INTO v_employee_count FROM HMS_EMPLOYEES_SH  WHERE HOSPITAL_ID = p_hospital_id;
 
         DBMS_OUTPUT.PUT_LINE('==============================================');
         DBMS_OUTPUT.PUT_LINE('BRANCH SUMMARY REPORT - ' || v_branch_name);
@@ -163,8 +163,8 @@ CREATE OR REPLACE PACKAGE BODY HMS_PKG_SH AS
                     ep.PHONE1         AS PHONE_NUMBER,
                     e.EMAIL_ID,
                     e.EMPLOYEE_TYPE
-              FROM  HMS_EMPLOYEES          e
-              LEFT JOIN HMS_EMPLOYEE_PHONE_MST ep
+              FROM  HMS_EMPLOYEES_SH          e
+              LEFT JOIN HMS_EMPLOYEE_PHONE_MST_SH ep
                      ON e.EMPLOYEE_ID = ep.EMPLOYEE_ID
              WHERE  e.HOSPITAL_ID = p_hospital_id
              ORDER BY e.EMPLOYEE_ID ASC;
@@ -206,8 +206,8 @@ CREATE OR REPLACE PACKAGE BODY HMS_PKG_SH AS
         p_hospital_id   IN NUMBER,
         p_department_id IN NUMBER
     ) AS
-        v_branch_name   HMS_HOSPITAL_BRANCH.BRANCH_NAME%TYPE;
-        v_dept_name     HMS_DEPARTMENT.DEPARTMENT_NAME%TYPE;
+        v_branch_name   HMS_HOSPITAL_BRANCH_SH.BRANCH_NAME%TYPE;
+        v_dept_name     HMS_DEPARTMENT_SH.DEPARTMENT_NAME%TYPE;
         v_row_count     NUMBER := 0;
 
         -- Named cursor: admitted patients with primary phone
@@ -218,8 +218,8 @@ CREATE OR REPLACE PACKAGE BODY HMS_PKG_SH AS
                     pp.PHONE_NUMBER,
                     p.EMAIL_ID,
                     p.ADDRESS_CITY
-              FROM  HMS_PATIENT p
-              LEFT JOIN HMS_PATIENT_PHONE_MST pp
+              FROM  HMS_PATIENT_SH p
+              LEFT JOIN HMS_PATIENT_PHONE_MST_SH pp
                      ON p.PATIENT_ID  = pp.PATIENT_ID
                     AND pp.PHONE_TYPE = 'PRIMARY'
              WHERE  p.HOSPITAL_ID   = p_hospital_id
@@ -229,7 +229,7 @@ CREATE OR REPLACE PACKAGE BODY HMS_PKG_SH AS
         -- Validate hospital exists
         BEGIN
             SELECT BRANCH_NAME INTO v_branch_name
-              FROM HMS_HOSPITAL_BRANCH WHERE HOSPITAL_ID = p_hospital_id;
+              FROM HMS_HOSPITAL_BRANCH_SH WHERE HOSPITAL_ID = p_hospital_id;
         EXCEPTION WHEN NO_DATA_FOUND THEN
             DBMS_OUTPUT.PUT_LINE('ERROR: Hospital ID ' || p_hospital_id || ' not found.'); RETURN;
         END;
@@ -237,7 +237,7 @@ CREATE OR REPLACE PACKAGE BODY HMS_PKG_SH AS
         -- Validate department belongs to this hospital
         BEGIN
             SELECT DEPARTMENT_NAME INTO v_dept_name
-              FROM HMS_DEPARTMENT
+              FROM HMS_DEPARTMENT_SH
              WHERE DEPARTMENT_ID = p_department_id AND HOSPITAL_ID = p_hospital_id;
         EXCEPTION WHEN NO_DATA_FOUND THEN
             DBMS_OUTPUT.PUT_LINE('ERROR: Dept ID ' || p_department_id || ' not in Hospital ' || p_hospital_id); RETURN;
@@ -298,28 +298,28 @@ CREATE OR REPLACE PACKAGE BODY HMS_PKG_SH AS
         -- optionally filtered by batch_id.
         -- -------------------------------------------------------
         CURSOR c_hosp_master IS
-            SELECT * FROM HMS_HOSPITAL_MASTER_STG
+            SELECT * FROM HMS_HOSPITAL_MASTER_STG_SH
              WHERE RECORD_STATUS = 'NEW'
                AND (p_batch_id IS NULL OR BATCH_ID = p_batch_id)
              ORDER BY STG_ID;
 
         -- Cursor: fetch NEW department staging rows
         CURSOR c_dept IS
-            SELECT * FROM HMS_DEPARTMENT_STG
+            SELECT * FROM HMS_DEPARTMENT_STG_SH
              WHERE RECORD_STATUS = 'NEW'
                AND (p_batch_id IS NULL OR BATCH_ID = p_batch_id)
              ORDER BY STG_ID;
 
         -- Cursor: fetch NEW employee staging rows
         CURSOR c_emp IS
-            SELECT * FROM HMS_EMPLOYEES_STG
+            SELECT * FROM HMS_EMPLOYEES_STG_SH
              WHERE RECORD_STATUS = 'NEW'
                AND (p_batch_id IS NULL OR BATCH_ID = p_batch_id)
              ORDER BY STG_ID;
 
         -- Cursor: fetch NEW patient staging rows
         CURSOR c_pat IS
-            SELECT * FROM HMS_PATIENT_STG
+            SELECT * FROM HMS_PATIENT_STG_SH
              WHERE RECORD_STATUS = 'NEW'
                AND (p_batch_id IS NULL OR BATCH_ID = p_batch_id)
              ORDER BY STG_ID;
@@ -338,9 +338,9 @@ CREATE OR REPLACE PACKAGE BODY HMS_PKG_SH AS
 
 
         -- ===================================================
-        -- SECTION 1: Process HMS_HOSPITAL_MASTER_STG
+        -- SECTION 1: Process HMS_HOSPITAL_MASTER_STG_SH
         -- ===================================================
-        DBMS_OUTPUT.PUT_LINE('[1/4] Processing HMS_HOSPITAL_MASTER_STG ...');
+        DBMS_OUTPUT.PUT_LINE('[1/4] Processing HMS_HOSPITAL_MASTER_STG_SH ...');
         FOR r IN c_hosp_master LOOP
             v_error_msg := NULL;
 
@@ -352,7 +352,7 @@ CREATE OR REPLACE PACKAGE BODY HMS_PKG_SH AS
             -- Validation 2: HOSPITAL_CODE must be unique in base table
             IF v_error_msg IS NULL THEN
                 SELECT COUNT(*) INTO v_dup_count
-                  FROM HMS_HOSPITAL_MASTER WHERE HOSPITAL_CODE = r.HOSPITAL_CODE;
+                  FROM HMS_HOSPITAL_MASTER_SH WHERE HOSPITAL_CODE = r.HOSPITAL_CODE;
                 IF v_dup_count > 0 THEN
                     v_error_msg := 'Duplicate HOSPITAL_CODE [' || r.HOSPITAL_CODE || '] already exists in base table. ';
                 END IF;
@@ -365,7 +365,7 @@ CREATE OR REPLACE PACKAGE BODY HMS_PKG_SH AS
 
             IF v_error_msg IS NOT NULL THEN
                 -- Mark row as ERROR in staging
-                UPDATE HMS_HOSPITAL_MASTER_STG
+                UPDATE HMS_HOSPITAL_MASTER_STG_SH
                    SET RECORD_STATUS      = 'ERROR',
                        ERROR_LOG          = v_error_msg,
                        LAST_UPDATED_BY    = C_USER_ID,      -- WHO: stamp updater
@@ -375,14 +375,14 @@ CREATE OR REPLACE PACKAGE BODY HMS_PKG_SH AS
                 v_error_count := v_error_count + 1;
             ELSE
                 -- Insert into base table with WHO columns stamped
-                INSERT INTO HMS_HOSPITAL_MASTER (
+                INSERT INTO HMS_HOSPITAL_MASTER_SH (
                     HOSPITAL_CODE, CITY_NAME, HOSPITAL_NAME, HOSPITAL_BASIC_FEES
                 ) VALUES (
                     r.HOSPITAL_CODE, r.CITY_NAME, r.HOSPITAL_NAME, r.HOSPITAL_BASIC_FEES
                 );
 
                 -- Update staging row to LOADED and stamp WHO
-                UPDATE HMS_HOSPITAL_MASTER_STG
+                UPDATE HMS_HOSPITAL_MASTER_STG_SH
                    SET RECORD_STATUS      = 'LOADED',
                        ERROR_LOG          = NULL,
                        LAST_UPDATED_BY    = C_USER_ID,      -- WHO: stamp updater
@@ -394,9 +394,9 @@ CREATE OR REPLACE PACKAGE BODY HMS_PKG_SH AS
         END LOOP;
 
         -- ===================================================
-        -- SECTION 2: Process HMS_DEPARTMENT_STG
+        -- SECTION 2: Process HMS_DEPARTMENT_STG_SH
         -- ===================================================
-        DBMS_OUTPUT.PUT_LINE('[2/4] Processing HMS_DEPARTMENT_STG ...');
+        DBMS_OUTPUT.PUT_LINE('[2/4] Processing HMS_DEPARTMENT_STG_SH ...');
         FOR r IN c_dept LOOP
             v_error_msg := NULL;
 
@@ -409,7 +409,7 @@ CREATE OR REPLACE PACKAGE BODY HMS_PKG_SH AS
             END IF;
 
             IF v_error_msg IS NOT NULL THEN
-                UPDATE HMS_DEPARTMENT_STG
+                UPDATE HMS_DEPARTMENT_STG_SH
                    SET RECORD_STATUS     = 'ERROR',
                        ERROR_LOG         = v_error_msg,
                        LAST_UPDATED_BY   = C_USER_ID,
@@ -418,13 +418,13 @@ CREATE OR REPLACE PACKAGE BODY HMS_PKG_SH AS
                  WHERE STG_ID = r.STG_ID;
                 v_error_count := v_error_count + 1;
             ELSE
-                INSERT INTO HMS_DEPARTMENT (
+                INSERT INTO HMS_DEPARTMENT_SH (
                     DEPARTMENT_ID, HOSPITAL_ID, DEPARTMENT_NAME, DEPT_MANAGER, NUMBER_OF_BEDS
                 ) VALUES (
                     r.DEPARTMENT_ID, r.HOSPITAL_ID, r.DEPARTMENT_NAME,
                     r.DEPT_MANAGER, NVL(r.NUMBER_OF_BEDS, 0)
                 );
-                UPDATE HMS_DEPARTMENT_STG
+                UPDATE HMS_DEPARTMENT_STG_SH
                    SET RECORD_STATUS     = 'LOADED',
                        ERROR_LOG         = NULL,
                        LAST_UPDATED_BY   = C_USER_ID,
@@ -436,9 +436,9 @@ CREATE OR REPLACE PACKAGE BODY HMS_PKG_SH AS
         END LOOP;
 
         -- ===================================================
-        -- SECTION 3: Process HMS_EMPLOYEES_STG
+        -- SECTION 3: Process HMS_EMPLOYEES_STG_SH
         -- ===================================================
-        DBMS_OUTPUT.PUT_LINE('[3/4] Processing HMS_EMPLOYEES_STG ...');
+        DBMS_OUTPUT.PUT_LINE('[3/4] Processing HMS_EMPLOYEES_STG_SH ...');
         FOR r IN c_emp LOOP
             v_error_msg := NULL;
 
@@ -451,7 +451,7 @@ CREATE OR REPLACE PACKAGE BODY HMS_PKG_SH AS
             END IF;
 
             IF v_error_msg IS NOT NULL THEN
-                UPDATE HMS_EMPLOYEES_STG
+                UPDATE HMS_EMPLOYEES_STG_SH
                    SET RECORD_STATUS     = 'ERROR',
                        ERROR_LOG         = v_error_msg,
                        LAST_UPDATED_BY   = C_USER_ID,
@@ -460,14 +460,14 @@ CREATE OR REPLACE PACKAGE BODY HMS_PKG_SH AS
                  WHERE STG_ID = r.STG_ID;
                 v_error_count := v_error_count + 1;
             ELSE
-                INSERT INTO HMS_EMPLOYEES (
+                INSERT INTO HMS_EMPLOYEES_SH (
                     EMPLOYEE_ID, HOSPITAL_ID, DEPARTMENT_ID,
                     EMPLOYEE_FIRST_NAME, EMPLOYEE_LAST_NAME, EMPLOYEE_TYPE, EMAIL_ID
                 ) VALUES (
                     r.EMPLOYEE_ID, r.HOSPITAL_ID, r.DEPARTMENT_ID,
                     r.EMPLOYEE_FIRST_NAME, r.EMPLOYEE_LAST_NAME, r.EMPLOYEE_TYPE, r.EMAIL_ID
                 );
-                UPDATE HMS_EMPLOYEES_STG
+                UPDATE HMS_EMPLOYEES_STG_SH
                    SET RECORD_STATUS     = 'LOADED',
                        ERROR_LOG         = NULL,
                        LAST_UPDATED_BY   = C_USER_ID,
@@ -479,9 +479,9 @@ CREATE OR REPLACE PACKAGE BODY HMS_PKG_SH AS
         END LOOP;
 
         -- ===================================================
-        -- SECTION 4: Process HMS_PATIENT_STG
+        -- SECTION 4: Process HMS_PATIENT_STG_SH
         -- ===================================================
-        DBMS_OUTPUT.PUT_LINE('[4/4] Processing HMS_PATIENT_STG ...');
+        DBMS_OUTPUT.PUT_LINE('[4/4] Processing HMS_PATIENT_STG_SH ...');
         FOR r IN c_pat LOOP
             v_error_msg := NULL;
 
@@ -490,7 +490,7 @@ CREATE OR REPLACE PACKAGE BODY HMS_PKG_SH AS
             END IF;
 
             IF v_error_msg IS NOT NULL THEN
-                UPDATE HMS_PATIENT_STG
+                UPDATE HMS_PATIENT_STG_SH
                    SET RECORD_STATUS     = 'ERROR',
                        ERROR_LOG         = v_error_msg,
                        LAST_UPDATED_BY   = C_USER_ID,
@@ -499,7 +499,7 @@ CREATE OR REPLACE PACKAGE BODY HMS_PKG_SH AS
                  WHERE STG_ID = r.STG_ID;
                 v_error_count := v_error_count + 1;
             ELSE
-                INSERT INTO HMS_PATIENT (
+                INSERT INTO HMS_PATIENT_SH (
                     PATIENT_ID, HOSPITAL_ID, DEPARTMENT_ID,
                     PATIENT_FIRST_NAME, PATIENT_LAST_NAME, EMAIL_ID,
                     ADDRESS_STREET, ADDRESS_CITY, ADDRESS_STATE, ADDRESS_POSTAL_CODE
@@ -508,7 +508,7 @@ CREATE OR REPLACE PACKAGE BODY HMS_PKG_SH AS
                     r.PATIENT_FIRST_NAME, r.PATIENT_LAST_NAME, r.EMAIL_ID,
                     r.ADDRESS_STREET, r.ADDRESS_CITY, r.ADDRESS_STATE, r.ADDRESS_POSTAL_CODE
                 );
-                UPDATE HMS_PATIENT_STG
+                UPDATE HMS_PATIENT_STG_SH
                    SET RECORD_STATUS     = 'LOADED',
                        ERROR_LOG         = NULL,
                        LAST_UPDATED_BY   = C_USER_ID,
@@ -556,7 +556,7 @@ END HMS_PKG_SH;
 --
 -- Check staging row statuses:
 -- SELECT STG_ID, RECORD_STATUS, ERROR_LOG, LAST_UPDATED_BY, LAST_UPDATE_DATE
---   FROM HMS_HOSPITAL_MASTER_STG ORDER BY STG_ID;
+--   FROM HMS_HOSPITAL_MASTER_STG_SH ORDER BY STG_ID;
 -- ============================================================
 -- END OF FILE: HMS_PKG_SH.sql  |  Version 2.0  |  Member: SH
 -- ============================================================

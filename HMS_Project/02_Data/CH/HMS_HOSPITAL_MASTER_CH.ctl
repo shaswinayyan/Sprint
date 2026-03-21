@@ -2,7 +2,7 @@
 -- File        : HMS_HOSPITAL_MASTER_CH.ctl
 -- Project     : Hospital Management System (HMS)
 -- Member      : CH - Chandana
--- Description : SQL*Loader CTL for HMS_HOSPITAL_MASTER table.
+-- Description : SQL*Loader CTL for HMS_HOSPITAL_MASTER_CH table.
 -- Usage       : sqlldr userid=APPS/<password>@<SID>
 --                      control=HMS_HOSPITAL_MASTER_CH.ctl
 --                      log=HMS_HOSPITAL_MASTER_CH.log
@@ -11,7 +11,7 @@
 -- ============================================================
 LOAD DATA
 INFILE 'HMS_HOSPITAL_DATA_CH.csv'
-INTO TABLE HMS_HOSPITAL_MASTER
+INTO TABLE HMS_HOSPITAL_MASTER_STG_CH
 APPEND
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'

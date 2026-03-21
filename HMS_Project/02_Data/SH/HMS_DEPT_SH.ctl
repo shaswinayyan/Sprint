@@ -3,7 +3,7 @@
 -- Project     : Hospital Management System (HMS)
 -- Member      : SH - Shaswin
 -- Description : SQL*Loader CTL for bulk loading department data
---               from HMS_DEPT_DATA_SH.csv into HMS_DEPARTMENT.
+--               from HMS_DEPT_DATA_SH.csv into HMS_DEPARTMENT_SH.
 -- Usage       : sqlldr userid=APPS/<password>@<SID>
 --                      control=HMS_DEPT_SH.ctl
 --                      log=HMS_DEPT_SH.log
@@ -13,7 +13,7 @@
 
 LOAD DATA
 INFILE 'HMS_DEPT_DATA_SH.csv'
-INTO TABLE HMS_DEPARTMENT
+INTO TABLE HMS_DEPARTMENT_STG_SH
 APPEND
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'

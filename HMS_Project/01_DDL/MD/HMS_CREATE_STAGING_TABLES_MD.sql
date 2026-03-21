@@ -289,6 +289,59 @@ CREATE SEQUENCE HMS_PAT_STG_SEQ_MD START WITH 1 INCREMENT BY 1 NOCACHE;
 
 
 -- ===========================================================
+
+-- ===========================================================
+-- STAGING TABLE 6: HMS_EMPLOYEE_PHONE_MST_STG_MD
+-- ===========================================================
+CREATE TABLE HMS_EMPLOYEE_PHONE_MST_STG_MD (
+    STG_ID              NUMBER          NOT NULL,
+    BATCH_ID            VARCHAR2(50),
+    RECORD_STATUS       VARCHAR2(20)    DEFAULT 'NEW',
+    ERROR_LOG           VARCHAR2(4000),
+
+    PHONE_RECORD_ID     NUMBER(10),
+    EMPLOYEE_ID         NUMBER(10),
+    PHONE1              VARCHAR2(15),
+    PHONE2              VARCHAR2(15),
+
+    CREATED_BY          NUMBER          NOT NULL,
+    CREATION_DATE       DATE            NOT NULL,
+    LAST_UPDATED_BY     NUMBER          NOT NULL,
+    LAST_UPDATE_DATE    DATE            NOT NULL,
+    LAST_UPDATE_LOGIN   NUMBER,
+
+    CONSTRAINT PK_EMP_PH_STG_MD  PRIMARY KEY (STG_ID),
+    CONSTRAINT CHK_EMP_PH_STG_ST_MD CHECK (RECORD_STATUS IN ('NEW','VALIDATED','LOADED','ERROR'))
+);
+CREATE SEQUENCE HMS_EMP_PHONE_STG_SEQ_MD START WITH 1 INCREMENT BY 1 NOCACHE;
+
+-- ===========================================================
+-- STAGING TABLE 7: HMS_DOCTOR_AVAILABILITY_STG_MD
+-- ===========================================================
+CREATE TABLE HMS_DOCTOR_AVAILABILITY_STG_MD (
+    STG_ID              NUMBER          NOT NULL,
+    BATCH_ID            VARCHAR2(50),
+    RECORD_STATUS       VARCHAR2(20)    DEFAULT 'NEW',
+    ERROR_LOG           VARCHAR2(4000),
+
+    AVAILABILITY_ID     NUMBER(10),
+    DOCTOR_ID           NUMBER(10),
+    DOCTOR_DEPARTMENT   NUMBER(10),
+    AVAILABILITY_DAY    VARCHAR2(10),
+    START_TIME          VARCHAR2(8),
+    END_TIME            VARCHAR2(8),
+
+    CREATED_BY          NUMBER          NOT NULL,
+    CREATION_DATE       DATE            NOT NULL,
+    LAST_UPDATED_BY     NUMBER          NOT NULL,
+    LAST_UPDATE_DATE    DATE            NOT NULL,
+    LAST_UPDATE_LOGIN   NUMBER,
+
+    CONSTRAINT PK_DOC_AV_STG_MD   PRIMARY KEY (STG_ID),
+    CONSTRAINT CHK_DOC_AV_STG_ST_MD CHECK (RECORD_STATUS IN ('NEW','VALIDATED','LOADED','ERROR'))
+);
+CREATE SEQUENCE HMS_DOC_AVAIL_STG_SEQ_MD START WITH 1 INCREMENT BY 1 NOCACHE;
+
 -- END OF FILE: HMS_CREATE_STAGING_TABLES_MD.sql
 -- Run AFTER HMS_CREATE_TABLES.sql (staging has no FK deps)
 -- ===========================================================

@@ -521,6 +521,45 @@ CREATE OR REPLACE PACKAGE BODY HMS_PKG_SH AS
         END LOOP;
 
         -- ===================================================
+        
+        -- ===================================================
+        -- SECTION 3.5: Process HMS_EMPLOYEE_PHONE_MST_STG_SH
+        -- ===================================================
+        DBMS_OUTPUT.PUT_LINE('[3.5/7] Processing HMS_EMPLOYEE_PHONE_MST_STG_SH ...');
+        FOR r IN (SELECT * FROM HMS_EMPLOYEE_PHONE_MST_STG_SH WHERE RECORD_STATUS = 'NEW' AND (p_batch_id IS NULL OR BATCH_ID = p_batch_id) ORDER BY STG_ID) LOOP
+            v_error_msg := NULL;
+            IF r.PHONE_RECORD_ID IS NULL OR r.EMPLOYEE_ID IS NULL OR r.PHONE1 IS NULL THEN
+                v_error_msg := 'PK, FK, or PHONE1 is NULL. ';
+            END IF;
+            IF v_error_msg IS NOT NULL THEN
+                UPDATE HMS_EMPLOYEE_PHONE_MST_STG_SH SET RECORD_STATUS = 'ERROR', ERROR_LOG = v_error_msg, LAST_UPDATED_BY = C_USER_ID, LAST_UPDATE_DATE = v_now, LAST_UPDATE_LOGIN = v_login_id WHERE STG_ID = r.STG_ID;
+                v_error_count := v_error_count + 1;
+            ELSE
+                INSERT INTO HMS_EMPLOYEE_PHONE_MST_SH (PHONE_RECORD_ID, EMPLOYEE_ID, PHONE1, PHONE2) VALUES (r.PHONE_RECORD_ID, r.EMPLOYEE_ID, r.PHONE1, r.PHONE2);
+                UPDATE HMS_EMPLOYEE_PHONE_MST_STG_SH SET RECORD_STATUS = 'LOADED', ERROR_LOG = NULL, LAST_UPDATED_BY = C_USER_ID, LAST_UPDATE_DATE = v_now, LAST_UPDATE_LOGIN = v_login_id WHERE STG_ID = r.STG_ID;
+                v_loaded_count := v_loaded_count + 1;
+            END IF;
+        END LOOP;
+
+        -- ===================================================
+        -- SECTION 3.6: Process HMS_DOCTOR_AVAILABILITY_STG_SH
+        -- ===================================================
+        DBMS_OUTPUT.PUT_LINE('[3.6/7] Processing HMS_DOCTOR_AVAILABILITY_STG_SH ...');
+        FOR r IN (SELECT * FROM HMS_DOCTOR_AVAILABILITY_STG_SH WHERE RECORD_STATUS = 'NEW' AND (p_batch_id IS NULL OR BATCH_ID = p_batch_id) ORDER BY STG_ID) LOOP
+            v_error_msg := NULL;
+            IF r.AVAILABILITY_ID IS NULL OR r.DOCTOR_ID IS NULL OR r.DOCTOR_DEPARTMENT IS NULL OR r.AVAILABILITY_DAY IS NULL OR r.START_TIME IS NULL OR r.END_TIME IS NULL THEN
+                v_error_msg := 'One or more required fields is NULL. ';
+            END IF;
+            IF v_error_msg IS NOT NULL THEN
+                UPDATE HMS_DOCTOR_AVAILABILITY_STG_SH SET RECORD_STATUS = 'ERROR', ERROR_LOG = v_error_msg, LAST_UPDATED_BY = C_USER_ID, LAST_UPDATE_DATE = v_now, LAST_UPDATE_LOGIN = v_login_id WHERE STG_ID = r.STG_ID;
+                v_error_count := v_error_count + 1;
+            ELSE
+                INSERT INTO HMS_DOCTOR_AVAILABILITY_SH (AVAILABILITY_ID, DOCTOR_ID, DOCTOR_DEPARTMENT, AVAILABILITY_DAY, START_TIME, END_TIME) VALUES (r.AVAILABILITY_ID, r.DOCTOR_ID, r.DOCTOR_DEPARTMENT, r.AVAILABILITY_DAY, r.START_TIME, r.END_TIME);
+                UPDATE HMS_DOCTOR_AVAILABILITY_STG_SH SET RECORD_STATUS = 'LOADED', ERROR_LOG = NULL, LAST_UPDATED_BY = C_USER_ID, LAST_UPDATE_DATE = v_now, LAST_UPDATE_LOGIN = v_login_id WHERE STG_ID = r.STG_ID;
+                v_loaded_count := v_loaded_count + 1;
+            END IF;
+        END LOOP;
+
         -- SECTION 4: Process HMS_PATIENT_STG_SH
         -- ===================================================
         DBMS_OUTPUT.PUT_LINE('[4/4] Processing HMS_PATIENT_STG_SH ...');

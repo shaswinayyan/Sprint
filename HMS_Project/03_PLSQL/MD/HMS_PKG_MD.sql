@@ -1,7 +1,7 @@
 -- ============================================================
 -- File        : HMS_PKG_MD.sql
 -- Project     : Hospital Management System (HMS)
--- Member      : MD - Manideep
+-- Member      : MD - Manideep (FND_USER.USER_ID = 1021035)
 --               FND_USER.USER_ID = <MANIDEEP_USER_ID>
 --               Replace the C_USER_ID constant value below
 --               with Manideep's actual Oracle EBS User ID.
@@ -19,7 +19,7 @@
 CREATE OR REPLACE PACKAGE HMS_PKG_MD AS
 
     -- IMPORTANT: Replace with Manideep's actual EBS FND_USER.USER_ID
-    C_USER_ID   CONSTANT NUMBER := 0;   -- TODO: Manideep to update this value
+    C_USER_ID   CONSTANT NUMBER := 1021035;   -- TODO: Manideep to update this value
 
     PROCEDURE GET_BRANCH_SUMMARY  (p_hospital_id   IN NUMBER);
     PROCEDURE GET_EMPLOYEES_LIST  (p_hospital_id   IN NUMBER);

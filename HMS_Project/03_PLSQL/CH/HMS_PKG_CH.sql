@@ -1,7 +1,7 @@
 -- ============================================================
 -- File        : HMS_PKG_CH.sql
 -- Project     : Hospital Management System (HMS)
--- Member      : CH - Chandana
+-- Member      : CH - Chandana (FND_USER.USER_ID = 1021034)
 --               FND_USER.USER_ID = <CHANDANA_USER_ID>
 --               Replace the C_USER_ID constant value below
 --               with Chandana's actual Oracle EBS User ID.
@@ -19,7 +19,7 @@
 CREATE OR REPLACE PACKAGE HMS_PKG_CH AS
 
     -- IMPORTANT: Replace with Chandana's actual EBS FND_USER.USER_ID
-    C_USER_ID   CONSTANT NUMBER := 0;   -- TODO: Chandana to update this value
+    C_USER_ID   CONSTANT NUMBER := 1021034;   -- TODO: Chandana to update this value
 
     PROCEDURE GET_BRANCH_SUMMARY  (p_hospital_id   IN NUMBER);
     PROCEDURE GET_EMPLOYEES_LIST  (p_hospital_id   IN NUMBER);

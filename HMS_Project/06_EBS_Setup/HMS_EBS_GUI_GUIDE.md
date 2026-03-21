@@ -53,14 +53,11 @@
    ```
    *(Replace `SH` with your suffix: CH / MD / NM)*
 
-3. Run SQL*Loader for each table **in this order**:
+3. Run your automated double-click SQL*Loader batch script to load all 7 tables instantly:
    ```cmd
-   sqlldr userid=APPS/<password>@<SID> control=HMS_HOSPITAL_MASTER_SH.ctl log=HMS_HOSPITAL_MASTER_SH.log
-   sqlldr userid=APPS/<password>@<SID> control=HMS_DEPT_SH.ctl         log=HMS_DEPT_SH.log
-   sqlldr userid=APPS/<password>@<SID> control=HMS_EMPLOYEE_SH.ctl     log=HMS_EMPLOYEE_SH.log
-   sqlldr userid=APPS/<password>@<SID> control=HMS_PATIENT_SH.ctl      log=HMS_PATIENT_SH.log
+   load_all_data_SH.bat
    ```
-   *(Replace `SH` with your suffix; replace `<password>` and `<SID>` with actual values)*
+   *(Replace `SH` with your suffix: CH / MD / NM. Ensure your connection VPN/network allows traffic to `150.136.96.10:1521`)*
 
 4. After each run, open the `.log` file to confirm **0 rows rejected**.
 

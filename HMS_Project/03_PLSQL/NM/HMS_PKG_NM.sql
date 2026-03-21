@@ -1,7 +1,7 @@
 -- ============================================================
 -- File        : HMS_PKG_NM.sql
 -- Project     : Hospital Management System (HMS)
--- Member      : NM - Namitha
+-- Member      : NM - Namitha (FND_USER.USER_ID = 1021052)
 --               FND_USER.USER_ID = <NAMITHA_USER_ID>
 --               Replace the C_USER_ID constant value below
 --               with Namitha's actual Oracle EBS User ID.
@@ -19,7 +19,7 @@
 CREATE OR REPLACE PACKAGE HMS_PKG_NM AS
 
     -- IMPORTANT: Replace with Namitha's actual EBS FND_USER.USER_ID
-    C_USER_ID   CONSTANT NUMBER := 0;   -- TODO: Namitha to update this value
+    C_USER_ID   CONSTANT NUMBER := 1021052;   -- TODO: Namitha to update this value
 
     PROCEDURE GET_BRANCH_SUMMARY  (p_hospital_id   IN NUMBER);
     PROCEDURE GET_EMPLOYEES_LIST  (p_hospital_id   IN NUMBER);

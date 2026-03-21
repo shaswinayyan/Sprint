@@ -1,5 +1,5 @@
 -- ============================================================
--- File        : HMS_CREATE_STAGING_TABLES.sql
+-- File        : HMS_CREATE_STAGING_TABLES_SH.sql
 -- Project     : Hospital Management System (HMS)
 -- Description : Creates staging tables for bulk data loading.
 --               Staging tables contain all the columns of their
@@ -289,6 +289,6 @@ CREATE SEQUENCE HMS_PAT_STG_SEQ_SH START WITH 1 INCREMENT BY 1 NOCACHE;
 
 
 -- ===========================================================
--- END OF FILE: HMS_CREATE_STAGING_TABLES.sql
+-- END OF FILE: HMS_CREATE_STAGING_TABLES_SH.sql
 -- Run AFTER HMS_CREATE_TABLES.sql (staging has no FK deps)
 -- ===========================================================

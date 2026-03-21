@@ -1,5 +1,5 @@
 -- ============================================================
--- File        : HMS_CREATE_TABLES.sql
+-- File        : HMS_CREATE_TABLES_SH.sql
 -- Project     : Hospital Management System (HMS)
 -- Description : Creates all required database tables for the HMS
 --               project in the Oracle EBS 12.2.8 environment.
@@ -19,7 +19,6 @@
 --   5. HMS_EMPLOYEE_PHONE_MST_SH
 --   6. HMS_DOCTOR_AVAILABILITY_SH
 --   7. HMS_PATIENT_SH
---   8. HMS_PATIENT_PHONE_MST_SH
 -- ============================================================
 
 -- ===========================================================
@@ -120,7 +119,7 @@ CREATE TABLE HMS_DEPARTMENT_SH (
     DEPARTMENT_NAME     VARCHAR2(100)   NOT NULL,  -- Name of the department (e.g., Orthopedics)
     DEPT_MANAGER        VARCHAR2(100),             -- Name of the department manager
     NUMBER_OF_BEDS      NUMBER(5)       DEFAULT 0, -- Total beds in this department
-    CONSTRAINT PK_HMS_DEPARTMENT    PRIMARY KEY (DEPARTMENT_ID),
+    CONSTRAINT PK_HMS_DEPARTMENT_SH    PRIMARY KEY (DEPARTMENT_ID),
     CONSTRAINT FK_DEPT_BRANCH       FOREIGN KEY (HOSPITAL_ID)
                                     REFERENCES HMS_HOSPITAL_BRANCH_SH (HOSPITAL_ID),
     CONSTRAINT CHK_BEDS_POSITIVE    CHECK (NUMBER_OF_BEDS >= 0)
@@ -175,7 +174,7 @@ CREATE TABLE HMS_EMPLOYEE_PHONE_MST_SH (
     EMPLOYEE_ID         NUMBER(10)      NOT NULL,  -- FK -> HMS_EMPLOYEES_SH
     PHONE1              VARCHAR2(15)    NOT NULL,  -- Primary phone number
     PHONE2              VARCHAR2(15),              -- Secondary phone number (optional)
-    CONSTRAINT PK_EMP_PHONE     PRIMARY KEY (PHONE_RECORD_ID),
+    CONSTRAINT PK_EMP_PHONE_SH     PRIMARY KEY (PHONE_RECORD_ID),
     CONSTRAINT FK_PHONE_EMP     FOREIGN KEY (EMPLOYEE_ID)
                                 REFERENCES HMS_EMPLOYEES_SH (EMPLOYEE_ID)
 );
@@ -261,11 +260,11 @@ COMMENT ON COLUMN HMS_PATIENT_SH.ADDRESS_POSTAL_CODE    IS 'Postal or ZIP code o
 CREATE SEQUENCE HMS_HOSPITAL_BRANCH_SEQ  START WITH 1 INCREMENT BY 1 NOCACHE;
 CREATE SEQUENCE HMS_DEPARTMENT_SEQ       START WITH 1 INCREMENT BY 1 NOCACHE;
 CREATE SEQUENCE HMS_EMPLOYEES_SEQ        START WITH 1 INCREMENT BY 1 NOCACHE;
-CREATE SEQUENCE HMS_EMP_PHONE_SEQ        START WITH 1 INCREMENT BY 1 NOCACHE;
-CREATE SEQUENCE HMS_DOC_AVAIL_SEQ        START WITH 1 INCREMENT BY 1 NOCACHE;
+CREATE SEQUENCE HMS_EMP_PHONE_SEQ_SH        START WITH 1 INCREMENT BY 1 NOCACHE;
+CREATE SEQUENCE HMS_DOC_AVAIL_SEQ_SH        START WITH 1 INCREMENT BY 1 NOCACHE;
 CREATE SEQUENCE HMS_PATIENT_SEQ          START WITH 1 INCREMENT BY 1 NOCACHE;
 CREATE SEQUENCE HMS_PAT_PHONE_SEQ        START WITH 1 INCREMENT BY 1 NOCACHE;
 
 -- ============================================================
--- END OF FILE: HMS_CREATE_TABLES.sql
+-- END OF FILE: HMS_CREATE_TABLES_SH.sql
 -- ============================================================

@@ -394,6 +394,48 @@ CREATE OR REPLACE PACKAGE BODY HMS_PKG_SH AS
         END LOOP;
 
         -- ===================================================
+        
+        -- ===================================================
+        -- SECTION 1.5: Process HMS_HOSPITAL_BRANCH_STG_SH
+        -- ===================================================
+        DBMS_OUTPUT.PUT_LINE('[1.5/4] Processing HMS_HOSPITAL_BRANCH_STG_SH ...');
+        FOR r IN (SELECT * FROM HMS_HOSPITAL_BRANCH_STG_SH WHERE RECORD_STATUS = 'NEW' AND (p_batch_id IS NULL OR BATCH_ID = p_batch_id) ORDER BY STG_ID) LOOP
+            v_error_msg := NULL;
+
+            IF r.HOSPITAL_CODE IS NULL OR r.BRANCH_NAME IS NULL THEN
+                v_error_msg := 'HOSPITAL_CODE or BRANCH_NAME is NULL. ';
+            END IF;
+
+            IF v_error_msg IS NOT NULL THEN
+                UPDATE HMS_HOSPITAL_BRANCH_STG_SH
+                   SET RECORD_STATUS      = 'ERROR',
+                       ERROR_LOG          = v_error_msg,
+                       LAST_UPDATED_BY    = C_USER_ID,
+                       LAST_UPDATE_DATE   = v_now,
+                       LAST_UPDATE_LOGIN  = v_login_id
+                 WHERE STG_ID = r.STG_ID;
+                v_error_count := v_error_count + 1;
+            ELSE
+                INSERT INTO HMS_HOSPITAL_BRANCH_SH (
+                    HOSPITAL_ID, HOSPITAL_CODE, BRANCH_NAME, CITY, MANAGING_DIRECTOR,
+                    HELPDESK_NUMBER, EMERGENCY_NUMBER, CUSTOMER_CARE_EMAIL, CUSTOMER_CARE_PHONE
+                ) VALUES (
+                    r.HOSPITAL_ID, r.HOSPITAL_CODE, r.BRANCH_NAME, r.CITY, r.MANAGING_DIRECTOR,
+                    r.HELPDESK_NUMBER, r.EMERGENCY_NUMBER, r.CUSTOMER_CARE_EMAIL, r.CUSTOMER_CARE_PHONE
+                );
+
+                UPDATE HMS_HOSPITAL_BRANCH_STG_SH
+                   SET RECORD_STATUS      = 'LOADED',
+                       ERROR_LOG          = NULL,
+                       LAST_UPDATED_BY    = C_USER_ID,
+                       LAST_UPDATE_DATE   = v_now,
+                       LAST_UPDATE_LOGIN  = v_login_id
+                 WHERE STG_ID = r.STG_ID;
+                v_loaded_count := v_loaded_count + 1;
+            END IF;
+        END LOOP;
+
+        -- ===================================================
         -- SECTION 2: Process HMS_DEPARTMENT_STG_SH
         -- ===================================================
         DBMS_OUTPUT.PUT_LINE('[2/4] Processing HMS_DEPARTMENT_STG_SH ...');

@@ -125,7 +125,7 @@ CREATE OR REPLACE PACKAGE BODY HMS_PKG_SH AS
              WHERE HOSPITAL_ID = p_hospital_id;
         EXCEPTION
             WHEN NO_DATA_FOUND THEN
-                DBMS_OUTPUT.PUT_LINE('ERROR: Hospital ID ' || p_hospital_id || ' not found.');
+                FND_FILE.PUT_LINE(FND_FILE.OUTPUT, 'ERROR: Hospital ID ' || p_hospital_id || ' not found.');
                 RETURN;
         END;
 
@@ -134,18 +134,18 @@ CREATE OR REPLACE PACKAGE BODY HMS_PKG_SH AS
         SELECT COUNT(*) INTO v_doctor_count   FROM HMS_EMPLOYEES_SH  WHERE HOSPITAL_ID = p_hospital_id AND EMPLOYEE_TYPE = 'DOCTOR';
         SELECT COUNT(*) INTO v_employee_count FROM HMS_EMPLOYEES_SH  WHERE HOSPITAL_ID = p_hospital_id;
 
-        DBMS_OUTPUT.PUT_LINE('==============================================');
-        DBMS_OUTPUT.PUT_LINE('BRANCH SUMMARY REPORT - ' || v_branch_name);
-        DBMS_OUTPUT.PUT_LINE('Hospital ID   : ' || p_hospital_id);
-        DBMS_OUTPUT.PUT_LINE('----------------------------------------------');
-        DBMS_OUTPUT.PUT_LINE('Total Patients    : ' || v_patient_count);
-        DBMS_OUTPUT.PUT_LINE('Total Departments : ' || v_dept_count);
-        DBMS_OUTPUT.PUT_LINE('Total Doctors     : ' || v_doctor_count);
-        DBMS_OUTPUT.PUT_LINE('Total Employees   : ' || v_employee_count);
-        DBMS_OUTPUT.PUT_LINE('==============================================');
+        FND_FILE.PUT_LINE(FND_FILE.OUTPUT, '==============================================');
+        FND_FILE.PUT_LINE(FND_FILE.OUTPUT, 'BRANCH SUMMARY REPORT - ' || v_branch_name);
+        FND_FILE.PUT_LINE(FND_FILE.OUTPUT, 'Hospital ID   : ' || p_hospital_id);
+        FND_FILE.PUT_LINE(FND_FILE.OUTPUT, '----------------------------------------------');
+        FND_FILE.PUT_LINE(FND_FILE.OUTPUT, 'Total Patients    : ' || v_patient_count);
+        FND_FILE.PUT_LINE(FND_FILE.OUTPUT, 'Total Departments : ' || v_dept_count);
+        FND_FILE.PUT_LINE(FND_FILE.OUTPUT, 'Total Doctors     : ' || v_doctor_count);
+        FND_FILE.PUT_LINE(FND_FILE.OUTPUT, 'Total Employees   : ' || v_employee_count);
+        FND_FILE.PUT_LINE(FND_FILE.OUTPUT, '==============================================');
     EXCEPTION
         WHEN OTHERS THEN
-            DBMS_OUTPUT.PUT_LINE('UNEXPECTED ERROR in GET_BRANCH_SUMMARY: ' || SQLERRM);
+            FND_FILE.PUT_LINE(FND_FILE.OUTPUT, 'UNEXPECTED ERROR in GET_BRANCH_SUMMARY: ' || SQLERRM);
     END GET_BRANCH_SUMMARY;
 
 
@@ -171,15 +171,15 @@ CREATE OR REPLACE PACKAGE BODY HMS_PKG_SH AS
 
         v_row_count NUMBER := 0;
     BEGIN
-        DBMS_OUTPUT.PUT_LINE('==============================================');
-        DBMS_OUTPUT.PUT_LINE('EMPLOYEE LIST - Hospital ID: ' || p_hospital_id);
-        DBMS_OUTPUT.PUT_LINE('Sorted by: Employee ID (Ascending)');
-        DBMS_OUTPUT.PUT_LINE('----------------------------------------------');
-        DBMS_OUTPUT.PUT_LINE(RPAD('EMP_ID',10)||RPAD('FIRST NAME',15)||RPAD('LAST NAME',15)||RPAD('PHONE',18)||RPAD('TYPE',8)||'EMAIL');
-        DBMS_OUTPUT.PUT_LINE(RPAD('-',80,'-'));
+        FND_FILE.PUT_LINE(FND_FILE.OUTPUT, '==============================================');
+        FND_FILE.PUT_LINE(FND_FILE.OUTPUT, 'EMPLOYEE LIST - Hospital ID: ' || p_hospital_id);
+        FND_FILE.PUT_LINE(FND_FILE.OUTPUT, 'Sorted by: Employee ID (Ascending)');
+        FND_FILE.PUT_LINE(FND_FILE.OUTPUT, '----------------------------------------------');
+        FND_FILE.PUT_LINE(FND_FILE.OUTPUT, RPAD('EMP_ID',10)||RPAD('FIRST NAME',15)||RPAD('LAST NAME',15)||RPAD('PHONE',18)||RPAD('TYPE',8)||'EMAIL');
+        FND_FILE.PUT_LINE(FND_FILE.OUTPUT, RPAD('-',80,'-'));
 
         FOR r IN c_employees LOOP
-            DBMS_OUTPUT.PUT_LINE(
+            FND_FILE.PUT_LINE(FND_FILE.OUTPUT, 
                 RPAD(r.EMPLOYEE_ID, 10)              ||
                 RPAD(r.EMPLOYEE_FIRST_NAME, 15)      ||
                 RPAD(r.EMPLOYEE_LAST_NAME, 15)       ||
@@ -190,12 +190,12 @@ CREATE OR REPLACE PACKAGE BODY HMS_PKG_SH AS
             v_row_count := v_row_count + 1;
         END LOOP;
 
-        DBMS_OUTPUT.PUT_LINE(RPAD('-',80,'-'));
-        DBMS_OUTPUT.PUT_LINE('Total Records: ' || v_row_count);
-        DBMS_OUTPUT.PUT_LINE('==============================================');
+        FND_FILE.PUT_LINE(FND_FILE.OUTPUT, RPAD('-',80,'-'));
+        FND_FILE.PUT_LINE(FND_FILE.OUTPUT, 'Total Records: ' || v_row_count);
+        FND_FILE.PUT_LINE(FND_FILE.OUTPUT, '==============================================');
     EXCEPTION
         WHEN OTHERS THEN
-            DBMS_OUTPUT.PUT_LINE('UNEXPECTED ERROR in GET_EMPLOYEES_LIST: ' || SQLERRM);
+            FND_FILE.PUT_LINE(FND_FILE.OUTPUT, 'UNEXPECTED ERROR in GET_EMPLOYEES_LIST: ' || SQLERRM);
     END GET_EMPLOYEES_LIST;
 
 
@@ -231,7 +231,7 @@ CREATE OR REPLACE PACKAGE BODY HMS_PKG_SH AS
             SELECT BRANCH_NAME INTO v_branch_name
               FROM HMS_HOSPITAL_BRANCH_SH WHERE HOSPITAL_ID = p_hospital_id;
         EXCEPTION WHEN NO_DATA_FOUND THEN
-            DBMS_OUTPUT.PUT_LINE('ERROR: Hospital ID ' || p_hospital_id || ' not found.'); RETURN;
+            FND_FILE.PUT_LINE(FND_FILE.OUTPUT, 'ERROR: Hospital ID ' || p_hospital_id || ' not found.'); RETURN;
         END;
 
         -- Validate department belongs to this hospital
@@ -240,19 +240,19 @@ CREATE OR REPLACE PACKAGE BODY HMS_PKG_SH AS
               FROM HMS_DEPARTMENT_SH
              WHERE DEPARTMENT_ID = p_department_id AND HOSPITAL_ID = p_hospital_id;
         EXCEPTION WHEN NO_DATA_FOUND THEN
-            DBMS_OUTPUT.PUT_LINE('ERROR: Dept ID ' || p_department_id || ' not in Hospital ' || p_hospital_id); RETURN;
+            FND_FILE.PUT_LINE(FND_FILE.OUTPUT, 'ERROR: Dept ID ' || p_department_id || ' not in Hospital ' || p_hospital_id); RETURN;
         END;
 
-        DBMS_OUTPUT.PUT_LINE('==============================================');
-        DBMS_OUTPUT.PUT_LINE('ADMITTED PATIENTS REPORT');
-        DBMS_OUTPUT.PUT_LINE('Branch     : ' || v_branch_name);
-        DBMS_OUTPUT.PUT_LINE('Department : ' || v_dept_name);
-        DBMS_OUTPUT.PUT_LINE('----------------------------------------------');
-        DBMS_OUTPUT.PUT_LINE(RPAD('PAT_ID',8)||RPAD('FIRST NAME',15)||RPAD('LAST NAME',15)||RPAD('PHONE',16)||RPAD('CITY',12)||'EMAIL');
-        DBMS_OUTPUT.PUT_LINE(RPAD('-',80,'-'));
+        FND_FILE.PUT_LINE(FND_FILE.OUTPUT, '==============================================');
+        FND_FILE.PUT_LINE(FND_FILE.OUTPUT, 'ADMITTED PATIENTS REPORT');
+        FND_FILE.PUT_LINE(FND_FILE.OUTPUT, 'Branch     : ' || v_branch_name);
+        FND_FILE.PUT_LINE(FND_FILE.OUTPUT, 'Department : ' || v_dept_name);
+        FND_FILE.PUT_LINE(FND_FILE.OUTPUT, '----------------------------------------------');
+        FND_FILE.PUT_LINE(FND_FILE.OUTPUT, RPAD('PAT_ID',8)||RPAD('FIRST NAME',15)||RPAD('LAST NAME',15)||RPAD('PHONE',16)||RPAD('CITY',12)||'EMAIL');
+        FND_FILE.PUT_LINE(FND_FILE.OUTPUT, RPAD('-',80,'-'));
 
         FOR r IN c_patients LOOP
-            DBMS_OUTPUT.PUT_LINE(
+            FND_FILE.PUT_LINE(FND_FILE.OUTPUT, 
                 RPAD(r.PATIENT_ID, 8)                ||
                 RPAD(r.PATIENT_FIRST_NAME, 15)       ||
                 RPAD(r.PATIENT_LAST_NAME, 15)        ||
@@ -263,12 +263,12 @@ CREATE OR REPLACE PACKAGE BODY HMS_PKG_SH AS
             v_row_count := v_row_count + 1;
         END LOOP;
 
-        DBMS_OUTPUT.PUT_LINE(RPAD('-',80,'-'));
-        DBMS_OUTPUT.PUT_LINE('Total Patients Admitted: ' || v_row_count);
-        DBMS_OUTPUT.PUT_LINE('==============================================');
+        FND_FILE.PUT_LINE(FND_FILE.OUTPUT, RPAD('-',80,'-'));
+        FND_FILE.PUT_LINE(FND_FILE.OUTPUT, 'Total Patients Admitted: ' || v_row_count);
+        FND_FILE.PUT_LINE(FND_FILE.OUTPUT, '==============================================');
     EXCEPTION
         WHEN OTHERS THEN
-            DBMS_OUTPUT.PUT_LINE('UNEXPECTED ERROR in GET_DEPT_PATIENTS: ' || SQLERRM);
+            FND_FILE.PUT_LINE(FND_FILE.OUTPUT, 'UNEXPECTED ERROR in GET_DEPT_PATIENTS: ' || SQLERRM);
     END GET_DEPT_PATIENTS;
 
 
@@ -329,18 +329,18 @@ CREATE OR REPLACE PACKAGE BODY HMS_PKG_SH AS
         v_dup_count     NUMBER;
 
     BEGIN
-        DBMS_OUTPUT.PUT_LINE('==============================================');
-        DBMS_OUTPUT.PUT_LINE('STAGING-TO-BASE LOAD  |  Member: SH (Shaswin)');
-        DBMS_OUTPUT.PUT_LINE('Run By (USER_ID) : ' || C_USER_ID);
-        DBMS_OUTPUT.PUT_LINE('Run Timestamp    : ' || TO_CHAR(v_now,'YYYY-MM-DD HH24:MI:SS'));
-        DBMS_OUTPUT.PUT_LINE('Batch Filter     : ' || NVL(p_batch_id, 'ALL NEW ROWS'));
-        DBMS_OUTPUT.PUT_LINE('----------------------------------------------');
+        FND_FILE.PUT_LINE(FND_FILE.OUTPUT, '==============================================');
+        FND_FILE.PUT_LINE(FND_FILE.OUTPUT, 'STAGING-TO-BASE LOAD  |  Member: SH (Shaswin)');
+        FND_FILE.PUT_LINE(FND_FILE.OUTPUT, 'Run By (USER_ID) : ' || C_USER_ID);
+        FND_FILE.PUT_LINE(FND_FILE.OUTPUT, 'Run Timestamp    : ' || TO_CHAR(v_now,'YYYY-MM-DD HH24:MI:SS'));
+        FND_FILE.PUT_LINE(FND_FILE.OUTPUT, 'Batch Filter     : ' || NVL(p_batch_id, 'ALL NEW ROWS'));
+        FND_FILE.PUT_LINE(FND_FILE.OUTPUT, '----------------------------------------------');
 
 
         -- ===================================================
         -- SECTION 1: Process HMS_HOSPITAL_MASTER_STG_SH
         -- ===================================================
-        DBMS_OUTPUT.PUT_LINE('[1/4] Processing HMS_HOSPITAL_MASTER_STG_SH ...');
+        FND_FILE.PUT_LINE(FND_FILE.OUTPUT, '[1/4] Processing HMS_HOSPITAL_MASTER_STG_SH ...');
         FOR r IN c_hosp_master LOOP
             v_error_msg := NULL;
 
@@ -398,7 +398,7 @@ CREATE OR REPLACE PACKAGE BODY HMS_PKG_SH AS
         -- ===================================================
         -- SECTION 1.5: Process HMS_HOSPITAL_BRANCH_STG_SH
         -- ===================================================
-        DBMS_OUTPUT.PUT_LINE('[1.5/4] Processing HMS_HOSPITAL_BRANCH_STG_SH ...');
+        FND_FILE.PUT_LINE(FND_FILE.OUTPUT, '[1.5/4] Processing HMS_HOSPITAL_BRANCH_STG_SH ...');
         FOR r IN (SELECT * FROM HMS_HOSPITAL_BRANCH_STG_SH WHERE RECORD_STATUS = 'NEW' AND (p_batch_id IS NULL OR BATCH_ID = p_batch_id) ORDER BY STG_ID) LOOP
             v_error_msg := NULL;
 
@@ -438,7 +438,7 @@ CREATE OR REPLACE PACKAGE BODY HMS_PKG_SH AS
         -- ===================================================
         -- SECTION 2: Process HMS_DEPARTMENT_STG_SH
         -- ===================================================
-        DBMS_OUTPUT.PUT_LINE('[2/4] Processing HMS_DEPARTMENT_STG_SH ...');
+        FND_FILE.PUT_LINE(FND_FILE.OUTPUT, '[2/4] Processing HMS_DEPARTMENT_STG_SH ...');
         FOR r IN c_dept LOOP
             v_error_msg := NULL;
 
@@ -480,7 +480,7 @@ CREATE OR REPLACE PACKAGE BODY HMS_PKG_SH AS
         -- ===================================================
         -- SECTION 3: Process HMS_EMPLOYEES_STG_SH
         -- ===================================================
-        DBMS_OUTPUT.PUT_LINE('[3/4] Processing HMS_EMPLOYEES_STG_SH ...');
+        FND_FILE.PUT_LINE(FND_FILE.OUTPUT, '[3/4] Processing HMS_EMPLOYEES_STG_SH ...');
         FOR r IN c_emp LOOP
             v_error_msg := NULL;
 
@@ -525,7 +525,7 @@ CREATE OR REPLACE PACKAGE BODY HMS_PKG_SH AS
         -- ===================================================
         -- SECTION 3.5: Process HMS_EMPLOYEE_PHONE_MST_STG_SH
         -- ===================================================
-        DBMS_OUTPUT.PUT_LINE('[3.5/7] Processing HMS_EMPLOYEE_PHONE_MST_STG_SH ...');
+        FND_FILE.PUT_LINE(FND_FILE.OUTPUT, '[3.5/7] Processing HMS_EMPLOYEE_PHONE_MST_STG_SH ...');
         FOR r IN (SELECT * FROM HMS_EMPLOYEE_PHONE_MST_STG_SH WHERE RECORD_STATUS = 'NEW' AND (p_batch_id IS NULL OR BATCH_ID = p_batch_id) ORDER BY STG_ID) LOOP
             v_error_msg := NULL;
             IF r.PHONE_RECORD_ID IS NULL OR r.EMPLOYEE_ID IS NULL OR r.PHONE1 IS NULL THEN
@@ -544,7 +544,7 @@ CREATE OR REPLACE PACKAGE BODY HMS_PKG_SH AS
         -- ===================================================
         -- SECTION 3.6: Process HMS_DOCTOR_AVAILABILITY_STG_SH
         -- ===================================================
-        DBMS_OUTPUT.PUT_LINE('[3.6/7] Processing HMS_DOCTOR_AVAILABILITY_STG_SH ...');
+        FND_FILE.PUT_LINE(FND_FILE.OUTPUT, '[3.6/7] Processing HMS_DOCTOR_AVAILABILITY_STG_SH ...');
         FOR r IN (SELECT * FROM HMS_DOCTOR_AVAILABILITY_STG_SH WHERE RECORD_STATUS = 'NEW' AND (p_batch_id IS NULL OR BATCH_ID = p_batch_id) ORDER BY STG_ID) LOOP
             v_error_msg := NULL;
             IF r.AVAILABILITY_ID IS NULL OR r.DOCTOR_ID IS NULL OR r.DOCTOR_DEPARTMENT IS NULL OR r.AVAILABILITY_DAY IS NULL OR r.START_TIME IS NULL OR r.END_TIME IS NULL THEN
@@ -562,7 +562,7 @@ CREATE OR REPLACE PACKAGE BODY HMS_PKG_SH AS
 
         -- SECTION 4: Process HMS_PATIENT_STG_SH
         -- ===================================================
-        DBMS_OUTPUT.PUT_LINE('[4/4] Processing HMS_PATIENT_STG_SH ...');
+        FND_FILE.PUT_LINE(FND_FILE.OUTPUT, '[4/4] Processing HMS_PATIENT_STG_SH ...');
         FOR r IN c_pat LOOP
             v_error_msg := NULL;
 
@@ -603,18 +603,18 @@ CREATE OR REPLACE PACKAGE BODY HMS_PKG_SH AS
         -- Commit all changes in one transaction
         COMMIT;
 
-        DBMS_OUTPUT.PUT_LINE('----------------------------------------------');
-        DBMS_OUTPUT.PUT_LINE('LOAD COMPLETE');
-        DBMS_OUTPUT.PUT_LINE('Rows Loaded Successfully : ' || v_loaded_count);
-        DBMS_OUTPUT.PUT_LINE('Rows Failed (ERROR)      : ' || v_error_count);
-        DBMS_OUTPUT.PUT_LINE('Committed by USER_ID     : ' || C_USER_ID);
-        DBMS_OUTPUT.PUT_LINE('==============================================');
+        FND_FILE.PUT_LINE(FND_FILE.OUTPUT, '----------------------------------------------');
+        FND_FILE.PUT_LINE(FND_FILE.OUTPUT, 'LOAD COMPLETE');
+        FND_FILE.PUT_LINE(FND_FILE.OUTPUT, 'Rows Loaded Successfully : ' || v_loaded_count);
+        FND_FILE.PUT_LINE(FND_FILE.OUTPUT, 'Rows Failed (ERROR)      : ' || v_error_count);
+        FND_FILE.PUT_LINE(FND_FILE.OUTPUT, 'Committed by USER_ID     : ' || C_USER_ID);
+        FND_FILE.PUT_LINE(FND_FILE.OUTPUT, '==============================================');
 
     EXCEPTION
         WHEN OTHERS THEN
             ROLLBACK;
-            DBMS_OUTPUT.PUT_LINE('CRITICAL ERROR in LOAD_STAGING_TO_BASE: ' || SQLERRM);
-            DBMS_OUTPUT.PUT_LINE('Transaction rolled back. No changes committed.');
+            FND_FILE.PUT_LINE(FND_FILE.OUTPUT, 'CRITICAL ERROR in LOAD_STAGING_TO_BASE: ' || SQLERRM);
+            FND_FILE.PUT_LINE(FND_FILE.OUTPUT, 'Transaction rolled back. No changes committed.');
     END LOAD_STAGING_TO_BASE;
 
 
@@ -624,7 +624,8 @@ END HMS_PKG_SH;
 -- ============================================================
 -- HOW TO TEST (run in SQL Developer):
 -- ============================================================
--- SET SERVEROUTPUT ON SIZE UNLIMITED;
+-- Note: In SQL Developer, FND_FILE output goes to a temp server directory if not initialized.
+-- To test FND_FILE locally in SQL Developer, you may need a wrapper or revert to DBMS_OUTPUT locally.
 --
 -- Test procedures:
 -- EXEC HMS_PKG_SH.GET_BRANCH_SUMMARY(1);

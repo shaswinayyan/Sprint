@@ -52,6 +52,8 @@ CREATE OR REPLACE PACKAGE HMS_PKG_SH AS
     --   p_hospital_id  IN NUMBER  - Hospital branch surrogate ID
     -- ----------------------------------------------------------
     PROCEDURE GET_BRANCH_SUMMARY (
+        errbuf OUT VARCHAR2,
+        retcode OUT VARCHAR2,
         p_hospital_id IN NUMBER
     );
 
@@ -63,6 +65,8 @@ CREATE OR REPLACE PACKAGE HMS_PKG_SH AS
     --   p_hospital_id  IN NUMBER  - Hospital branch surrogate ID
     -- ----------------------------------------------------------
     PROCEDURE GET_EMPLOYEES_LIST (
+        errbuf OUT VARCHAR2,
+        retcode OUT VARCHAR2,
         p_hospital_id IN NUMBER
     );
 
@@ -75,6 +79,8 @@ CREATE OR REPLACE PACKAGE HMS_PKG_SH AS
     --   p_department_id IN NUMBER  - Department ID
     -- ----------------------------------------------------------
     PROCEDURE GET_DEPT_PATIENTS (
+        errbuf OUT VARCHAR2,
+        retcode OUT VARCHAR2,
         p_hospital_id   IN NUMBER,
         p_department_id IN NUMBER
     );
@@ -94,6 +100,8 @@ CREATE OR REPLACE PACKAGE HMS_PKG_SH AS
     --                              Pass NULL to process all NEW rows.
     -- ----------------------------------------------------------
     PROCEDURE LOAD_STAGING_TO_BASE (
+        errbuf OUT VARCHAR2,
+        retcode OUT VARCHAR2,
         p_batch_id IN VARCHAR2 DEFAULT NULL
     );
 
@@ -110,6 +118,8 @@ CREATE OR REPLACE PACKAGE BODY HMS_PKG_SH AS
     -- Procedure : GET_BRANCH_SUMMARY
     -- ==========================================================
     PROCEDURE GET_BRANCH_SUMMARY (
+        errbuf OUT VARCHAR2,
+        retcode OUT VARCHAR2,
         p_hospital_id IN NUMBER
     ) AS
         v_patient_count   NUMBER := 0;
@@ -145,6 +155,7 @@ CREATE OR REPLACE PACKAGE BODY HMS_PKG_SH AS
         FND_FILE.PUT_LINE(FND_FILE.OUTPUT, '==============================================');
     EXCEPTION
         WHEN OTHERS THEN
+            errbuf := SQLERRM; retcode := '2';
             FND_FILE.PUT_LINE(FND_FILE.OUTPUT, 'UNEXPECTED ERROR in GET_BRANCH_SUMMARY: ' || SQLERRM);
     END GET_BRANCH_SUMMARY;
 
@@ -153,6 +164,8 @@ CREATE OR REPLACE PACKAGE BODY HMS_PKG_SH AS
     -- Procedure : GET_EMPLOYEES_LIST
     -- ==========================================================
     PROCEDURE GET_EMPLOYEES_LIST (
+        errbuf OUT VARCHAR2,
+        retcode OUT VARCHAR2,
         p_hospital_id IN NUMBER
     ) AS
         -- Named cursor: all employees with primary phone, sorted by ID
@@ -195,6 +208,7 @@ CREATE OR REPLACE PACKAGE BODY HMS_PKG_SH AS
         FND_FILE.PUT_LINE(FND_FILE.OUTPUT, '==============================================');
     EXCEPTION
         WHEN OTHERS THEN
+            errbuf := SQLERRM; retcode := '2';
             FND_FILE.PUT_LINE(FND_FILE.OUTPUT, 'UNEXPECTED ERROR in GET_EMPLOYEES_LIST: ' || SQLERRM);
     END GET_EMPLOYEES_LIST;
 
@@ -203,6 +217,8 @@ CREATE OR REPLACE PACKAGE BODY HMS_PKG_SH AS
     -- Procedure : GET_DEPT_PATIENTS
     -- ==========================================================
     PROCEDURE GET_DEPT_PATIENTS (
+        errbuf OUT VARCHAR2,
+        retcode OUT VARCHAR2,
         p_hospital_id   IN NUMBER,
         p_department_id IN NUMBER
     ) AS
@@ -265,6 +281,7 @@ CREATE OR REPLACE PACKAGE BODY HMS_PKG_SH AS
         FND_FILE.PUT_LINE(FND_FILE.OUTPUT, '==============================================');
     EXCEPTION
         WHEN OTHERS THEN
+            errbuf := SQLERRM; retcode := '2';
             FND_FILE.PUT_LINE(FND_FILE.OUTPUT, 'UNEXPECTED ERROR in GET_DEPT_PATIENTS: ' || SQLERRM);
     END GET_DEPT_PATIENTS;
 
@@ -276,6 +293,8 @@ CREATE OR REPLACE PACKAGE BODY HMS_PKG_SH AS
     --             Oracle EBS WHO columns using C_USER_ID (1021027).
     -- ==========================================================
     PROCEDURE LOAD_STAGING_TO_BASE (
+        errbuf OUT VARCHAR2,
+        retcode OUT VARCHAR2,
         p_batch_id IN VARCHAR2 DEFAULT NULL
     ) AS
 
@@ -610,6 +629,7 @@ CREATE OR REPLACE PACKAGE BODY HMS_PKG_SH AS
     EXCEPTION
         WHEN OTHERS THEN
             ROLLBACK;
+            errbuf := SQLERRM; retcode := '2';
             FND_FILE.PUT_LINE(FND_FILE.OUTPUT, 'CRITICAL ERROR in LOAD_STAGING_TO_BASE: ' || SQLERRM);
             FND_FILE.PUT_LINE(FND_FILE.OUTPUT, 'Transaction rolled back. No changes committed.');
     END LOAD_STAGING_TO_BASE;

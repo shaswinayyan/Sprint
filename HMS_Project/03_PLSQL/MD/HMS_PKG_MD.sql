@@ -23,9 +23,8 @@ CREATE OR REPLACE PACKAGE HMS_PKG_MD AS
 
     PROCEDURE GET_BRANCH_SUMMARY  (p_hospital_id   IN NUMBER);
     PROCEDURE GET_EMPLOYEES_LIST  (p_hospital_id   IN NUMBER);
-    PROCEDURE GET_DEPT_PATIENTS   (p_hospital_id   IN NUMBER,
-                                   p_department_id IN NUMBER);
-    PROCEDURE LOAD_STAGING_TO_BASE (p_batch_id IN VARCHAR2 DEFAULT NULL);
+    PROCEDURE GET_DEPT_PATIENTS   (errbuf OUT VARCHAR2, retcode OUT VARCHAR2, p_hospital_id IN NUMBER, p_department_id IN NUMBER);
+    PROCEDURE LOAD_STAGING_TO_BASE (errbuf OUT VARCHAR2, retcode OUT VARCHAR2, p_batch_id IN VARCHAR2 DEFAULT NULL);
 
 END HMS_PKG_MD;
 /
@@ -36,7 +35,7 @@ CREATE OR REPLACE PACKAGE BODY HMS_PKG_MD AS
     -- ==========================================================
     -- Procedure: GET_BRANCH_SUMMARY
     -- ==========================================================
-    PROCEDURE GET_BRANCH_SUMMARY (p_hospital_id IN NUMBER) AS
+    PROCEDURE GET_BRANCH_SUMMARY (errbuf OUT VARCHAR2, retcode OUT VARCHAR2, p_hospital_id IN NUMBER) AS
         v_patient_count   NUMBER := 0;
         v_dept_count      NUMBER := 0;
         v_doctor_count    NUMBER := 0;
@@ -60,13 +59,14 @@ CREATE OR REPLACE PACKAGE BODY HMS_PKG_MD AS
         FND_FILE.PUT_LINE(FND_FILE.OUTPUT, 'Total Employees   : ' || v_employee_count);
         FND_FILE.PUT_LINE(FND_FILE.OUTPUT, '==============================================');
     EXCEPTION WHEN OTHERS THEN
-        FND_FILE.PUT_LINE(FND_FILE.OUTPUT, 'UNEXPECTED ERROR in GET_BRANCH_SUMMARY: ' || SQLERRM);
+        errbuf := SQLERRM; retcode := '2';
+            FND_FILE.PUT_LINE(FND_FILE.OUTPUT, 'UNEXPECTED ERROR in GET_BRANCH_SUMMARY: ' || SQLERRM);
     END GET_BRANCH_SUMMARY;
 
     -- ==========================================================
     -- Procedure: GET_EMPLOYEES_LIST
     -- ==========================================================
-    PROCEDURE GET_EMPLOYEES_LIST (p_hospital_id IN NUMBER) AS
+    PROCEDURE GET_EMPLOYEES_LIST (errbuf OUT VARCHAR2, retcode OUT VARCHAR2, p_hospital_id IN NUMBER) AS
         -- Named cursor: employees with primary phone, sorted by ID
         CURSOR c_employees IS
             SELECT  e.EMPLOYEE_ID, e.EMPLOYEE_FIRST_NAME, e.EMPLOYEE_LAST_NAME,
@@ -90,13 +90,14 @@ CREATE OR REPLACE PACKAGE BODY HMS_PKG_MD AS
         FND_FILE.PUT_LINE(FND_FILE.OUTPUT, 'Total Records: ' || v_row_count);
         FND_FILE.PUT_LINE(FND_FILE.OUTPUT, '==============================================');
     EXCEPTION WHEN OTHERS THEN
-        FND_FILE.PUT_LINE(FND_FILE.OUTPUT, 'UNEXPECTED ERROR in GET_EMPLOYEES_LIST: ' || SQLERRM);
+        errbuf := SQLERRM; retcode := '2';
+            FND_FILE.PUT_LINE(FND_FILE.OUTPUT, 'UNEXPECTED ERROR in GET_EMPLOYEES_LIST: ' || SQLERRM);
     END GET_EMPLOYEES_LIST;
 
     -- ==========================================================
     -- Procedure: GET_DEPT_PATIENTS
     -- ==========================================================
-    PROCEDURE GET_DEPT_PATIENTS (p_hospital_id IN NUMBER, p_department_id IN NUMBER) AS
+    PROCEDURE GET_DEPT_PATIENTS (errbuf OUT VARCHAR2, retcode OUT VARCHAR2, p_hospital_id IN NUMBER, p_department_id IN NUMBER) AS
         v_branch_name   HMS_HOSPITAL_BRANCH_MD.BRANCH_NAME%TYPE;
         v_dept_name     HMS_DEPARTMENT_MD.DEPARTMENT_NAME%TYPE;
         v_row_count     NUMBER := 0;
@@ -125,7 +126,8 @@ CREATE OR REPLACE PACKAGE BODY HMS_PKG_MD AS
         FND_FILE.PUT_LINE(FND_FILE.OUTPUT, 'Total Patients: '||v_row_count);
         FND_FILE.PUT_LINE(FND_FILE.OUTPUT, '==============================================');
     EXCEPTION WHEN OTHERS THEN
-        FND_FILE.PUT_LINE(FND_FILE.OUTPUT, 'UNEXPECTED ERROR in GET_DEPT_PATIENTS: ' || SQLERRM);
+        errbuf := SQLERRM; retcode := '2';
+            FND_FILE.PUT_LINE(FND_FILE.OUTPUT, 'UNEXPECTED ERROR in GET_DEPT_PATIENTS: ' || SQLERRM);
     END GET_DEPT_PATIENTS;
 
     -- ==========================================================
@@ -133,7 +135,7 @@ CREATE OR REPLACE PACKAGE BODY HMS_PKG_MD AS
     -- Validates staging rows and promotes to base tables.
     -- Stamps Oracle EBS WHO columns using C_USER_ID (Manideep's).
     -- ==========================================================
-    PROCEDURE LOAD_STAGING_TO_BASE (p_batch_id IN VARCHAR2 DEFAULT NULL) AS
+    PROCEDURE LOAD_STAGING_TO_BASE (errbuf OUT VARCHAR2, retcode OUT VARCHAR2, p_batch_id IN VARCHAR2 DEFAULT NULL) AS
         v_now          DATE   := SYSDATE;
         v_login_id     NUMBER := NVL(FND_GLOBAL.LOGIN_ID, -1);
         v_loaded_count NUMBER := 0;

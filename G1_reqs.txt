@@ -1,0 +1,56 @@
+
+HOSPITAL MANAGEMENT SYSTEM
+
+
+We are leading Multispecialty Healthcare Hospital with best-in-class treatments for Kidney, knee replacements, Orthopedics, Critical Care. It has presence in 3 cities namely Delhi, Bangalore, Mumbai. You are going to design a central hospital information system (HIS) to be used by all offices for extracting information from database. 
+
+The hospital is headquartered in Mumbai. All hospitals across different cities have unique id, branch code, various products, managing director, different departments and units, helpdesk and emergency number and customer care support information (mailed and contact).
+
+Each department has unique department id, name, number of beds available, doctors working in that department, date and time availability of doctors.
+
+Each department has employees working who can be either staffs or doctors. Employee has employee id, Employee first and last name and contact which can be more than one and email-id.
+
+Patients have to provide first name & last name, email-id, contact, address. Contact can be one or more than one for one patient.
+Mailing address has street, city, province or state, postal code, Phone/fax. Email address has only one string, and no structure is assumed. 
+
+The form should display results based on search criteria by Hospital name, Employee name or Patient name. It should fetch results for all doctors available in one particular city hospital, number of beds available in a specific department, number of patients admitted in one department, fees for treatment, all details for any patients and availability of doctors in any particular day and time.
+
+An oracle report should be generated to provide all employee details for one particular department. Report should be designed in such a way that it can accept input parameters for employees and department from list of values and generate output as per requirements.
+Some of the entities and attributes are as follows:
+Hospital_branch : Hospital id, Hospital name, Branch, Managing Director, Contact, email
+Department : Department id, Department name , Dept Manager, Doctor name, Number of Beds
+Employees: Employee id, Employee Name, Employee type, Contact, email 
+Employee_phone_mst - Employee id, phone1 , phone2 
+Hospital_master - hospital code, city name, hospital name, hospital basic fees. 
+Doctor_availability – Doctor id, Doctor Name, Doctor Department, start_time , end_time
+Patient – Patient id, Patient name, contact, emaild, address
+ 
+
+
+Guidelines on the functionality to be built : 
+
+Create DB tables for Hospitals, Employees, Department, Patients with required attributes and constraints. Add tables as necessary.
+
+Create a procedure which gets number_of_patients, number_of_departments, number of doctors and number of employees for each branch. Hospital branch id will be the input to the procedure. 
+
+Create a procedure which Display all employee's first_name, last_name, phone_no and email. Please sort them by employee_id. Hospital_id will be the input to the procedure. 
+
+Create a procedure which will give list of all patients who are admitted to a specific department in hospital. Hospital branch id and department id will be the input to the procedure. 
+
+Create Oracle Reports to display Employee details for a specific department. Report should be designed in such a way that it can accept input parameters for employees and department from list of values and generate output as per requirements.
+
+Create Two Oracle Form to 
+
+Display information for patients
+Display information for employees
+
+Create following to access user Forms, Report and procedure.
+
+Create New User, 
+Responsibility, 
+Function, 
+Menu, 
+Concurrent executable, 
+Concurrent program, 
+Request groups as per requirements.
+

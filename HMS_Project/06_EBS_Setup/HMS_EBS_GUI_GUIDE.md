@@ -70,13 +70,13 @@
 **Navigation:** `System Administrator` → **Concurrent → Program → Executable → Define**
 > We will register 5 Executables (4 PL/SQL Procedures + 1 Oracle Report).
 
-| Executable Name | Short Name | Execution Method | Execution File Name |
-|-----------------|------------|------------------|---------------------|
-| `HMS_EMP_EXEC_<SUFFIX>` | `HMS_EMP_EXEC_<SUFFIX>` | **Oracle Reports** | `HMS_EMP_DEPT_REPORT_<SUFFIX>` |
-| `HMS_LOAD_EXEC_<SUFFIX>`| `HMS_LOAD_EXEC_<SUFFIX>`| **PL/SQL Stored Procedure** | `HMS_PKG_<SUFFIX>.LOAD_STAGING_TO_BASE` |
-| `HMS_SUMM_EXEC_<SUFFIX>`| `HMS_SUMM_EXEC_<SUFFIX>`| **PL/SQL Stored Procedure** | `HMS_PKG_<SUFFIX>.GET_BRANCH_SUMMARY` |
-| `HMS_LIST_EXEC_<SUFFIX>`| `HMS_LIST_EXEC_<SUFFIX>`| **PL/SQL Stored Procedure** | `HMS_PKG_<SUFFIX>.GET_EMPLOYEES_LIST` |
-| `HMS_DPAT_EXEC_<SUFFIX>`| `HMS_DPAT_EXEC_<SUFFIX>`| **PL/SQL Stored Procedure** | `HMS_PKG_<SUFFIX>.GET_DEPT_PATIENTS` |
+| Executable Name | Short Name | Execution Method | Execution File Name | Description |
+|-----------------|------------|------------------|---------------------|-------------|
+| `HMS_EMP_EXEC_<SUFFIX>` | `HMS_EMP_EXEC_<SUFFIX>` | **Oracle Reports** | `HMS_EMP_DEPT_REPORT_<SUFFIX>` | `Executable for HMS Employee Dept Report` |
+| `HMS_LOAD_EXEC_<SUFFIX>`| `HMS_LOAD_EXEC_<SUFFIX>`| **PL/SQL Stored Procedure** | `HMS_PKG_<SUFFIX>.LOAD_STAGING_TO_BASE` | `Executable for Loading Staging Data to Base` |
+| `HMS_SUMM_EXEC_<SUFFIX>`| `HMS_SUMM_EXEC_<SUFFIX>`| **PL/SQL Stored Procedure** | `HMS_PKG_<SUFFIX>.GET_BRANCH_SUMMARY` | `Executable for Fetching Branch Summary` |
+| `HMS_LIST_EXEC_<SUFFIX>`| `HMS_LIST_EXEC_<SUFFIX>`| **PL/SQL Stored Procedure** | `HMS_PKG_<SUFFIX>.GET_EMPLOYEES_LIST` | `Executable for Fetching Employees List` |
+| `HMS_DPAT_EXEC_<SUFFIX>`| `HMS_DPAT_EXEC_<SUFFIX>`| **PL/SQL Stored Procedure** | `HMS_PKG_<SUFFIX>.GET_DEPT_PATIENTS` | `Executable for Fetching Department Patients` |
 
 *Note: Application is `Application Object Library` for all.* -> **Save after each.**
 
@@ -87,26 +87,31 @@
 
 **1. Employee Department Report (PDF)**
 * **Program:** `HMS Emp Dept Report <SUFFIX>` / **Short Name:** `HMS_EMP_PROG_<SUFFIX>`
+* **Description:** `HMS Employee Department Report for <SUFFIX>`
 * **Executable Name:** `HMS_EMP_EXEC_<SUFFIX>` (Format: PDF)
 * **Parameters:**
   * Seq `10` | Parameter: `P_DEPARTMENT` | Value Set: `HMS_DEPT_LOV_<SUFFIX>` | Required: Yes
 
 **2. Load Staging to Base (Data Loading)**
 * **Program:** `HMS Load Staging Data <SUFFIX>` / **Short Name:** `HMS_LOAD_PROG_<SUFFIX>`
+* **Description:** `Concurrent Program to bulk load validated staging data to base tables`
 * **Executable Name:** `HMS_LOAD_EXEC_<SUFFIX>`
 
 **3. Get Branch Summary**
 * **Program:** `HMS Branch Summary <SUFFIX>` / **Short Name:** `HMS_SUMM_PROG_<SUFFIX>`
+* **Description:** `Concurrent Program to analyze hospital branch totals`
 * **Executable Name:** `HMS_SUMM_EXEC_<SUFFIX>`
 * **Parameters:** Seq `10` | Parameter: `P_HOSPITAL_ID` | Value Set: `HMS_HOSPITAL_LOV_<SUFFIX>`
 
 **4. Get Employees List**
 * **Program:** `HMS Employees List <SUFFIX>` / **Short Name:** `HMS_LIST_PROG_<SUFFIX>`
+* **Description:** `Concurrent Program to retrieve structured employee lists`
 * **Executable Name:** `HMS_LIST_EXEC_<SUFFIX>`
 * **Parameters:** Seq `10` | Parameter: `P_HOSPITAL_ID` | Value Set: `HMS_HOSPITAL_LOV_<SUFFIX>`
 
 **5. Get Dept Patients**
 * **Program:** `HMS Dept Patients <SUFFIX>` / **Short Name:** `HMS_DPAT_PROG_<SUFFIX>`
+* **Description:** `Concurrent Program to track admitted patients per department`
 * **Executable Name:** `HMS_DPAT_EXEC_<SUFFIX>`
 * **Parameters:**
   * Seq `10` | Parameter: `P_HOSPITAL_ID` | Value Set: `HMS_HOSPITAL_LOV_<SUFFIX>`

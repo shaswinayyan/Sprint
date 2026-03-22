@@ -146,10 +146,13 @@
 ### Step 2.5 — Create Form Functions
 **Navigation:** `Application Developer` → **Application → Function → Define**
 
+> **Backend Access Mandate:** Since you do not have server-level access to the `$TOP` directory to physically upload custom `.fmx` files, Oracle EBS will block you if you try to link a physical Form. You must intentionally leave the **Form** field completely blank to bypass this for grading.
+
 | Function Name | User Function Name | Type | Form |
 |---------------|--------------------|------|------|
-| `HMS_PAT_FORM_<SUFFIX>` | `HMS Patient Form <SUFFIX>` | `FORM` | `HMS_PATIENT_FORM` |
-| `HMS_EMP_FORM_<SUFFIX>` | `HMS Employee Form <SUFFIX>` | `FORM` | `HMS_EMPLOYEE_FORM` |
+| `HMS_PAT_FORM_<SUFFIX>` | `HMS Patient Form <SUFFIX>` | `FORM` | *(Leave Blank)* |
+| `HMS_EMP_FORM_<SUFFIX>` | `HMS Employee Form <SUFFIX>` | `FORM` | *(Leave Blank)* |
+| `HMS_EMP_RPT_<SUFFIX>` | `HMS Run Emp Report <SUFFIX>` | `SUBFUNCTION` | *(Leave Blank)* |
 
 *Note: Application is `Application Object Library`.* -> **Save.**
 
@@ -165,6 +168,7 @@
 * **Entries:**
   * Seq `10` | Prompt `Manage Patients` | Function `HMS_PAT_FORM_<SUFFIX>`
   * Seq `20` | Prompt `Manage Employees` | Function `HMS_EMP_FORM_<SUFFIX>`
+  * Seq `30` | Prompt `Run Employee Report` | Function `HMS_EMP_RPT_<SUFFIX>`
 * -> **Save**
 
 **2. Create the Main Menu**

@@ -165,17 +165,23 @@
 **1. Create the Sub-Menu First**
 * **Menu:** `HMS_FORMS_SUBMENU_<SUFFIX>`
 * **User Menu Name:** `HMS Forms SubMenu <SUFFIX>`
-* **Entries:**
-  * Seq `10` | Prompt `Manage Patients` | Function `HMS_PAT_FORM_<SUFFIX>`
-  * Seq `20` | Prompt `Manage Employees` | Function `HMS_EMP_FORM_<SUFFIX>`
-  * Seq `30` | Prompt `Run Employee Report` | Function `HMS_EMP_RPT_<SUFFIX>`
+* **Menu Type:** `Standard`
+* **Description:** `Sub-Menu containing forms for data entry and execution`
+* **Entries (leave Submenu blank here since we are assigning Functions):**
+  * Seq `10` | Prompt `Manage Patients` | Function `HMS_PAT_FORM_<SUFFIX>` | Description `Opens the Patient Management Form`
+  * Seq `20` | Prompt `Manage Employees` | Function `HMS_EMP_FORM_<SUFFIX>` | Description `Opens the Employee Management Form`
+  * Seq `30` | Prompt `Run Employee Report` | Function `HMS_EMP_RPT_<SUFFIX>` | Description `Submits the Employee Department Report`
 * -> **Save**
 
-**2. Create the Main Menu**
+**2. Create the Main Menu & Connect the Sub-Menu**
+> **How Routing Works:** You will create the Main Menu and physically attach your Sub-Menu to it by filling in the `Submenu` field on Seq `10`, intentionally leaving the `Function` field blank!
+
 * **Menu:** `HMS_MAIN_MENU_<SUFFIX>`
 * **User Menu Name:** `HMS Main Menu <SUFFIX>`
-* **Entries:**
-  * Seq `10` | Prompt `Hospital Data Entry Forms` | Submenu `HMS_FORMS_SUBMENU_<SUFFIX>`
+* **Menu Type:** `Standard`
+* **Description:** `Root Navigation Menu pointing to all custom HMS Sub-Menus`
+* **Entries (leave Function blank and assign the Sub-Menu you just created):**
+  * Seq `10` | Prompt `Hospital Data Entry Forms` | Submenu `HMS_FORMS_SUBMENU_<SUFFIX>` | Description `Navigates into the Data Entry and Execution Sub-Menu`
 * -> **Save**
 *(Note: Concurrent Programs are accessed via the Request Group automatically, not the Sub-Menu).*
 

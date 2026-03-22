@@ -85,12 +85,16 @@
 ### Step 2.3 — Define Concurrent Programs
 **Navigation:** `System Administrator` → **Concurrent → Program → Define**
 
+> **Application Mandate:** For *all 5* programs below, set **Application** to `Application Object Library`.
+> **Default Type Justification:** You will intentionally leave **Default Type** blank for all parameters. The justification is that we want to force the user to explicitly select a valid branch/department from our strict LOVs at runtime to guarantee absolute accuracy, rather than letting the system silently default to a static ID and generating wrong data.
+
 **1. Employee Department Report (PDF)**
 * **Program:** `HMS Emp Dept Report <SUFFIX>` / **Short Name:** `HMS_EMP_PROG_<SUFFIX>`
 * **Description:** `HMS Employee Department Report for <SUFFIX>`
 * **Executable Name:** `HMS_EMP_EXEC_<SUFFIX>` (Format: PDF)
+* **Style:** `A4` *(Mandatory for standard Oracle PDF report layouts)*
 * **Parameters:**
-  * Seq `10` | Parameter: `P_DEPARTMENT` | Value Set: `HMS_DEPT_LOV_<SUFFIX>` | Required: Yes
+  * Seq `10` | Parameter: `P_DEPARTMENT` | Description: `Select Department` | Value Set: `HMS_DEPT_LOV_<SUFFIX>` | Token: `P_DEPARTMENT` | Required: Yes
 
 **2. Load Staging to Base (Data Loading)**
 * **Program:** `HMS Load Staging Data <SUFFIX>` / **Short Name:** `HMS_LOAD_PROG_<SUFFIX>`
@@ -100,22 +104,24 @@
 **3. Get Branch Summary**
 * **Program:** `HMS Branch Summary <SUFFIX>` / **Short Name:** `HMS_SUMM_PROG_<SUFFIX>`
 * **Description:** `Concurrent Program to analyze hospital branch totals`
-* **Executable Name:** `HMS_SUMM_EXEC_<SUFFIX>`
-* **Parameters:** Seq `10` | Parameter: `P_HOSPITAL_ID` | Value Set: `HMS_HOSPITAL_LOV_<SUFFIX>`
+* **Executable Name:** `HMS_SUMM_EXEC_<SUFFIX>` (Format: Text)
+* **Parameters:**
+  * Seq `10` | Parameter: `P_HOSPITAL_ID` | Description: `Select Hospital Branch` | Value Set: `HMS_HOSPITAL_LOV_<SUFFIX>` | Token: `P_HOSPITAL_ID`
 
 **4. Get Employees List**
 * **Program:** `HMS Employees List <SUFFIX>` / **Short Name:** `HMS_LIST_PROG_<SUFFIX>`
 * **Description:** `Concurrent Program to retrieve structured employee lists`
-* **Executable Name:** `HMS_LIST_EXEC_<SUFFIX>`
-* **Parameters:** Seq `10` | Parameter: `P_HOSPITAL_ID` | Value Set: `HMS_HOSPITAL_LOV_<SUFFIX>`
+* **Executable Name:** `HMS_LIST_EXEC_<SUFFIX>` (Format: Text)
+* **Parameters:**
+  * Seq `10` | Parameter: `P_HOSPITAL_ID` | Description: `Select Hospital Branch` | Value Set: `HMS_HOSPITAL_LOV_<SUFFIX>` | Token: `P_HOSPITAL_ID`
 
 **5. Get Dept Patients**
 * **Program:** `HMS Dept Patients <SUFFIX>` / **Short Name:** `HMS_DPAT_PROG_<SUFFIX>`
 * **Description:** `Concurrent Program to track admitted patients per department`
-* **Executable Name:** `HMS_DPAT_EXEC_<SUFFIX>`
+* **Executable Name:** `HMS_DPAT_EXEC_<SUFFIX>` (Format: Text)
 * **Parameters:**
-  * Seq `10` | Parameter: `P_HOSPITAL_ID` | Value Set: `HMS_HOSPITAL_LOV_<SUFFIX>`
-  * Seq `20` | Parameter: `P_DEPARTMENT_ID` | Value Set: `HMS_DEPT_LOV_<SUFFIX>`
+  * Seq `10` | Parameter: `P_HOSPITAL_ID` | Description: `Select Hospital Branch` | Value Set: `HMS_HOSPITAL_LOV_<SUFFIX>` | Token: `P_HOSPITAL_ID`
+  * Seq `20` | Parameter: `P_DEPARTMENT_ID` | Description: `Select Department` | Value Set: `HMS_DEPT_LOV_<SUFFIX>` | Token: `P_DEPARTMENT_ID`
 
 -> **Save all 5 programs.**
 

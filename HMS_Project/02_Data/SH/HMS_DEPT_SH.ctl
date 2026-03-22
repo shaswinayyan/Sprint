@@ -1,3 +1,4 @@
+OPTIONS (SKIP=1)
 -- ============================================================
 -- File        : HMS_DEPT_SH.ctl
 -- Project     : Hospital Management System (HMS)
@@ -19,6 +20,13 @@ FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'
 TRAILING NULLCOLS
 (
+    STG_ID "HMS_DEPT_STG_SEQ_SH.NEXTVAL",
+    BATCH_ID CONSTANT 'BATCH_SH',
+    CREATED_BY CONSTANT 1021027,
+    CREATION_DATE SYSDATE,
+    LAST_UPDATED_BY CONSTANT 1021027,
+    LAST_UPDATE_DATE SYSDATE,
+
     DEPARTMENT_ID,    -- Unique department identifier
     HOSPITAL_ID,      -- Branch this department belongs to
     DEPARTMENT_NAME,  -- Name of the department

@@ -1,3 +1,4 @@
+OPTIONS (SKIP=1)
 -- ============================================================
 -- File        : HMS_BRANCH_MD.ctl
 -- Description : SQL*Loader control file for loading hospital branch data
@@ -16,6 +17,13 @@ OPTIONALLY ENCLOSED BY '"'
 TRAILING NULLCOLS
 
 (
+    STG_ID "HMS_HOSP_BRANCH_STG_SEQ_MD.NEXTVAL",
+    BATCH_ID CONSTANT 'BATCH_MD',
+    CREATED_BY CONSTANT 1021035,
+    CREATION_DATE SYSDATE,
+    LAST_UPDATED_BY CONSTANT 1021035,
+    LAST_UPDATE_DATE SYSDATE,
+
     HOSPITAL_ID,
     HOSPITAL_CODE,
     BRANCH_NAME,

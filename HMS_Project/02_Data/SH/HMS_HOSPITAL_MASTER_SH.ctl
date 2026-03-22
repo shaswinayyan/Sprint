@@ -1,3 +1,4 @@
+OPTIONS (SKIP=1)
 -- ============================================================
 -- File        : HMS_HOSPITAL_MASTER_SH.ctl
 -- Project     : Hospital Management System (HMS)
@@ -29,6 +30,13 @@ OPTIONALLY ENCLOSED BY '"'
 TRAILING NULLCOLS
 
 (
+    STG_ID "HMS_HOSP_MASTER_STG_SEQ_SH.NEXTVAL",
+    BATCH_ID CONSTANT 'BATCH_SH',
+    CREATED_BY CONSTANT 1021027,
+    CREATION_DATE SYSDATE,
+    LAST_UPDATED_BY CONSTANT 1021027,
+    LAST_UPDATE_DATE SYSDATE,
+
     -- HOSPITAL_CODE : Alphanumeric hospital code (e.g., H001)
     HOSPITAL_CODE,
 

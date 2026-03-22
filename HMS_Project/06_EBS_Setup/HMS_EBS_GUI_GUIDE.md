@@ -147,13 +147,13 @@
 **Navigation:** `Application Developer` → **Application → Function → Define**
 
 > **How to fix "No Pages Found":** You previously tried leaving the **Form** field blank because you couldn't upload Custom Forms. However, if all functions in a menu have blank Form fields, Oracle evaluates them as "dead links" and completely hides the menu tree on the Web Homepage (giving you the `No pages found` error). 
-> **The Fix:** We will use a standard Oracle native form (`FNDRSRUN` - the Submit Requests form) as a "dummy" placeholder. Because `FNDRSRUN` exists on the backend server, Oracle will validate it successfully and actively display your entire menu tree for your presentation!
+> **The Fix:** We will use a standard Oracle native form as a "dummy" placeholder. Click the **List of Values (...)** button inside the Form field and literally select the **very first Form** that appears in the list (for example, `FNDSCSGN` or `FNDPOMPO`). Because the form exists on the backend server, Oracle will validate it successfully and actively display your entire menu tree for your presentation!
 
 | Function Name | User Function Name | Type | Form *(Dummy)* |
 |---------------|--------------------|------|------|
-| `HMS_PAT_FORM_<SUFFIX>` | `HMS Patient Form <SUFFIX>` | `FORM` | `FNDRSRUN` |
-| `HMS_EMP_FORM_<SUFFIX>` | `HMS Employee Form <SUFFIX>` | `FORM` | `FNDRSRUN` |
-| `HMS_EMP_RPT_<SUFFIX>` | `HMS Run Emp Report <SUFFIX>` | `FORM` | `FNDRSRUN` |
+| `HMS_PAT_FORM_<SUFFIX>` | `HMS Patient Form <SUFFIX>` | `FORM` | *(Pick ANY Form from LOV)* |
+| `HMS_EMP_FORM_<SUFFIX>` | `HMS Employee Form <SUFFIX>` | `FORM` | *(Pick ANY Form from LOV)* |
+| `HMS_EMP_RPT_<SUFFIX>` | `HMS Run Emp Report <SUFFIX>` | `FORM` | *(Pick ANY Form from LOV)* |
 
 *Note: Application is `Application Object Library`. Ensure Type is `FORM` for all 3.* -> **Save.**
 

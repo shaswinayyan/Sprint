@@ -146,15 +146,16 @@
 ### Step 2.5 — Create Form Functions
 **Navigation:** `Application Developer` → **Application → Function → Define**
 
-> **Backend Access Mandate:** Since you do not have server-level access to the `$TOP` directory to physically upload custom `.fmx` files, Oracle EBS will block you if you try to link a physical Form. You must intentionally leave the **Form** field completely blank to bypass this for grading.
+> **How to fix "No Pages Found":** You previously tried leaving the **Form** field blank because you couldn't upload Custom Forms. However, if all functions in a menu have blank Form fields, Oracle evaluates them as "dead links" and completely hides the menu tree on the Web Homepage (giving you the `No pages found` error). 
+> **The Fix:** We will use a standard Oracle native form (`FNDRSRUN` - the Submit Requests form) as a "dummy" placeholder. Because `FNDRSRUN` exists on the backend server, Oracle will validate it successfully and actively display your entire menu tree for your presentation!
 
-| Function Name | User Function Name | Type | Form |
+| Function Name | User Function Name | Type | Form *(Dummy)* |
 |---------------|--------------------|------|------|
-| `HMS_PAT_FORM_<SUFFIX>` | `HMS Patient Form <SUFFIX>` | `FORM` | *(Leave Blank)* |
-| `HMS_EMP_FORM_<SUFFIX>` | `HMS Employee Form <SUFFIX>` | `FORM` | *(Leave Blank)* |
-| `HMS_EMP_RPT_<SUFFIX>` | `HMS Run Emp Report <SUFFIX>` | `SUBFUNCTION` | *(Leave Blank)* |
+| `HMS_PAT_FORM_<SUFFIX>` | `HMS Patient Form <SUFFIX>` | `FORM` | `FNDRSRUN` |
+| `HMS_EMP_FORM_<SUFFIX>` | `HMS Employee Form <SUFFIX>` | `FORM` | `FNDRSRUN` |
+| `HMS_EMP_RPT_<SUFFIX>` | `HMS Run Emp Report <SUFFIX>` | `FORM` | `FNDRSRUN` |
 
-*Note: Application is `Application Object Library`.* -> **Save.**
+*Note: Application is `Application Object Library`. Ensure Type is `FORM` for all 3.* -> **Save.**
 
 ---
 

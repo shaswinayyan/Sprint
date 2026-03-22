@@ -165,7 +165,7 @@
 **1. Create the Sub-Menu First**
 * **Menu:** `HMS_FORMS_SUBMENU_<SUFFIX>`
 * **User Menu Name:** `HMS Forms SubMenu <SUFFIX>`
-* **Menu Type:** `Standard`
+* **Menu Type:** `Standard` *(Definition: Instructs EBS to render this menu as a standard expandable Navigator tree link, rather than a hidden security or toolbar menu)*
 * **Description:** `Sub-Menu containing forms for data entry and execution`
 * **Entries (leave Submenu blank here since we are assigning Functions):**
   * Seq `10` | Prompt `Manage Patients` | Function `HMS_PAT_FORM_<SUFFIX>` | Description `Opens the Patient Management Form`
@@ -178,7 +178,7 @@
 
 * **Menu:** `HMS_MAIN_MENU_<SUFFIX>`
 * **User Menu Name:** `HMS Main Menu <SUFFIX>`
-* **Menu Type:** `Standard`
+* **Menu Type:** `Standard` *(Definition: Renders the root menu natively in the Navigator pane)*
 * **Description:** `Root Navigation Menu pointing to all custom HMS Sub-Menus`
 * **Entries (leave Function blank and assign the Sub-Menu you just created):**
   * Seq `10` | Prompt `Hospital Data Entry Forms` | Submenu `HMS_FORMS_SUBMENU_<SUFFIX>` | Description `Navigates into the Data Entry and Execution Sub-Menu`
@@ -193,10 +193,20 @@
 * **Responsibility Name:** `HMS Responsibility <SUFFIX>`
 * **Application:** `Application Object Library`
 * **Responsibility Key:** `HMS_RESP_<SUFFIX>`
+* **Description:** `Primary Responsibility for HMS Data Entry, Analysis, and Reporting operations for <SUFFIX>`
 * **Data Group:** `Standard` / `Application Object Library`
+  > *(Definition: The 'Standard' Data Group natively maps the AOL Application directly to the core `APPS` database schema, granting your Responsibility full read/write access to test the tables you created).*
 * **Menu:** `HMS_MAIN_MENU_<SUFFIX>`
 * **Request Group:** `HMS_REQ_GROUP_<SUFFIX>`
 * -> **Save**
+
+> **How PL/SQL Procedures connect to your Responsibility:**
+> 1. Your custom **PL/SQL Package** is registered as a **Concurrent Executable**.
+> 2. The Executable is bound to a **Concurrent Program**.
+> 3. The Program is added to the **Request Group** (`HMS_REQ_GROUP`).
+> 4. The **Request Group** is explicitly linked right here inside the **Responsibility**.
+> 5. The **Responsibility** is assigned to your **User**.
+> *Result: When you log in and select this Responsibility, you organically inherit full security clearance to execute your PL/SQL packages natively from the "Submit a New Request" window!*
 
 ---
 

@@ -44,23 +44,24 @@
 * **Description:** LOV for Hospital Branches
 * **List Type:** `List of Values`
 * **Security Type:** `No Security`
-* **Format Type:** `Char` / **Maximum Size:** `100`
+* **Format Type:** `Char` / **Maximum Size:** `100` *(Justification: This exactly matches the `VARCHAR2(100)` constraint defined for `BRANCH_NAME` in the Database DDL to prevent truncation)*
 * **Validation Type:** `Table`
 * Click **Edit Information**:
   * **Table Name:** `HMS_HOSPITAL_BRANCH_<SUFFIX>`
-  * **Value Column:** `BRANCH_NAME` (Size: 100)
-  * **ID Column:** `HOSPITAL_ID` (Size: 10)
+  * **Value Column:** `BRANCH_NAME` (Size: `100` - matches DDL)
+  * **ID Column:** `HOSPITAL_ID` (Size: `10` - matches DDL `NUMBER(10)`)
 * -> **Save**
 
 **Value Set 2: Department LOV**
 * **Value Set Name:** `HMS_DEPT_LOV_<SUFFIX>`
 * **Description:** LOV for Hospital Departments
-* **List Type:** `List of Values` / **Format Type:** `Char` (Size 100)
+* **List Type:** `List of Values` / **Format Type:** `Char`
+* **Maximum Size:** `100` *(Justification: Matches the `VARCHAR2(100)` maximum length configured for `DEPARTMENT_NAME` in your DDL script)*
 * **Validation Type:** `Table`
 * Click **Edit Information**:
   * **Table Name:** `HMS_DEPARTMENT_<SUFFIX>`
-  * **Value Column:** `DEPARTMENT_NAME` (Size: 100)
-  * **ID Column:** `DEPARTMENT_ID` (Size: 10)
+  * **Value Column:** `DEPARTMENT_NAME` (Size: `100` - matches DDL)
+  * **ID Column:** `DEPARTMENT_ID` (Size: `10` - matches DDL `NUMBER(10)`)
 * -> **Save**
 
 ---

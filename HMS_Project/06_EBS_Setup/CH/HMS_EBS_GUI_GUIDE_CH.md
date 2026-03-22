@@ -186,7 +186,6 @@
   * Seq `10` | Prompt `Manage Patients` | Function `HMS_PAT_FORM_CH` | Description `Opens the Patient Management Form`
   * Seq `20` | Prompt `Manage Employees` | Function `HMS_EMP_FORM_CH` | Description `Opens the Employee Management Form`
   * Seq `30` | Prompt `Run Employee Report` | Function `HMS_EMP_RPT_CH` | Description `Submits the Employee Department Report`
-  * Seq `40` | Prompt `Request Help` | Function `Request Help` | Description `Opens standard Oracle Help dialog`
 * -> **Save**
 
 **2. Create the Main Menu & Connect the Sub-Menu**
@@ -198,7 +197,6 @@
 * **Description:** `Root Navigation Menu pointing to all custom HMS Sub-Menus`
 * **Entries (leave Function blank and assign the Sub-Menu you just created):**
   * Seq `10` | Prompt `Hospital Data Entry Forms` | Submenu `HMS_FORMS_SUBMENU_CH` | Description `Navigates into the Data Entry and Execution Sub-Menu`
-  * Seq `20` | Prompt `Submit Concurrent Requests` | Function `Requests: Submit` | Description `CRITICAL: Opens the native Oracle Concurrent Manager UI so you can run your PL/SQL Reports`
 * -> **Save**
 *(Note: Concurrent Programs are accessed via the Request Group automatically, not the Sub-Menu).*
 

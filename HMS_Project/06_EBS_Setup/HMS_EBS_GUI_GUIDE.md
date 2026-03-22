@@ -64,6 +64,20 @@
   * **ID Column:** `DEPARTMENT_ID` (Size: `10` - matches DDL `NUMBER(10)`)
 * -> **Save**
 
+**Value Set 3: Dependent Department LOV (Cross-Validated)**
+* **Value Set Name:** `HMS_DEPT_DEP_LOV_<SUFFIX>`
+* **Description:** Cross-validated LOV filtering departments by the chosen Hospital
+* **List Type:** `List of Values` / **Format Type:** `Char`
+* **Maximum Size:** `100` 
+* **Validation Type:** `Table`
+* Click **Edit Information**:
+  * **Table Name:** `HMS_DEPARTMENT_<SUFFIX>`
+  * **Value Column:** `DEPARTMENT_NAME` (Size: `100`)
+  * **ID Column:** `DEPARTMENT_ID` (Size: `10`)
+  * **Where / Order By:** `WHERE HOSPITAL_ID = :$FLEX$.HMS_HOSPITAL_LOV_<SUFFIX>`
+  > *(Explanation: This magically binds the Department Dropdown directly to the Hospital. It prevents showing all 12 departments simultaneously, instead exclusively showing the 4 departments belonging to the exact Hospital ID chosen in the previous parameter field!)*
+* -> **Save**
+
 ---
 
 ### Step 2.2 — Define Concurrent Executables
@@ -121,7 +135,7 @@
 * **Executable Name:** `HMS_DPAT_EXEC_<SUFFIX>` (Format: Text)
 * **Parameters:**
   * Seq `10` | Parameter: `P_HOSPITAL_ID` | Description: `Select Hospital Branch` | Value Set: `HMS_HOSPITAL_LOV_<SUFFIX>` | Token: `P_HOSPITAL_ID`
-  * Seq `20` | Parameter: `P_DEPARTMENT_ID` | Description: `Select Department` | Value Set: `HMS_DEPT_LOV_<SUFFIX>` | Token: `P_DEPARTMENT_ID`
+  * Seq `20` | Parameter: `P_DEPARTMENT_ID` | Description: `Select Department` | Value Set: `HMS_DEPT_DEP_LOV_<SUFFIX>` | Token: `P_DEPARTMENT_ID`
 
 -> **Save all 5 programs.**
 

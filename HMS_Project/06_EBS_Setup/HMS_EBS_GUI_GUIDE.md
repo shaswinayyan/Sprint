@@ -131,12 +131,14 @@
 **Navigation:** `System Administrator` → **Security → Responsibility → Request Group**
 * **Group Name:** `HMS_REQ_GROUP_<SUFFIX>`
 * **Application:** `Application Object Library`
+* **Code:** *(Leave blank as it is not mandated)*
+* **Description:** `Request group containing all HMS analytical reports and staging data loaders for <SUFFIX>`
 * **Requests Table (Add these 5):**
-  * Program: `HMS_EMP_PROG_<SUFFIX>`
-  * Program: `HMS_LOAD_PROG_<SUFFIX>`
-  * Program: `HMS_SUMM_PROG_<SUFFIX>`
-  * Program: `HMS_LIST_PROG_<SUFFIX>`
-  * Program: `HMS_DPAT_PROG_<SUFFIX>`
+  * Type: `Program` | Name: `HMS Emp Dept Report <SUFFIX>`
+  * Type: `Program` | Name: `HMS Load Staging Data <SUFFIX>`
+  * Type: `Program` | Name: `HMS Branch Summary <SUFFIX>`
+  * Type: `Program` | Name: `HMS Employees List <SUFFIX>`
+  * Type: `Program` | Name: `HMS Dept Patients <SUFFIX>`
 * -> **Save**
 
 ---

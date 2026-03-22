@@ -197,6 +197,7 @@
 * **Description:** `Root Navigation Menu pointing to all custom HMS Sub-Menus`
 * **Entries (leave Function blank and assign the Sub-Menu you just created):**
   * Seq `10` | Prompt `Hospital Data Entry Forms` | Submenu `HMS_FORMS_SUBMENU_SH` | Description `Navigates into the Data Entry and Execution Sub-Menu`
+  * Seq `20` | Prompt `Submit Concurrent Requests` | Function `Requests: Submit` | Description `CRITICAL: Opens native Oracle Request submission window to execute your PL/SQL`
 * -> **Save**
 *(Note: Concurrent Programs are accessed via the Request Group automatically, not the Sub-Menu).*
 
